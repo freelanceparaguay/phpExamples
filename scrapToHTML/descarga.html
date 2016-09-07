@@ -1,0 +1,2105 @@
+
+<!DOCTYPE html>
+<html lang="es-419">
+	<head>
+		<meta charset="utf-8">
+		
+		<title>
+					AMERICANBET - 				</title>
+
+		<!--[if IE]>
+			<link rel="shortcut icon" href="/assets/images/favicon.ico">
+		<![endif]-->
+		
+		<link rel="icon" href="/assets/images/favicon.png">
+		
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+		<link rel="stylesheet" type="text/css" media="all" href="/assets/css/style.css">
+
+		<link rel="stylesheet" type="text/css" media="all" href="/stylesheet/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" media="all" href="/msgbox/jquery.msgbox.css">
+		<link rel="stylesheet" type="text/css" media="all" href="/stylesheet/css/jquery.dropdown.css">
+
+		<link rel="stylesheet" type="text/css" media="print" href="/stylesheet/css/print.css?0.65156800 1473286657">
+
+		<script type="text/javascript">
+			(function(){
+				function disableclick(event) {
+				  if(event.button==2) {
+				     return false;    
+				   }
+				}
+
+				document.onmousedown = disableclick;
+			})();
+		</script>
+
+		<script type="text/javascript" src="/js/jquery-2.0.3.min.js"></script>
+		<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+		<script type="text/javascript" src="/js/jquery.cycle.all.js"></script>
+		<script type="text/javascript" src="/msgbox/jquery.msgbox.min.js"></script>
+		<script type="text/javascript" src="/js/jquery.dropdown.min.js"></script>
+		<script type="text/javascript" src="/js/price.format.js"></script>
+		
+
+		<script type="text/javascript">
+			$(document).ready(function() {
+				// Banner
+				$('.banner').cycle();
+
+				// Tooltip
+				$("a").tooltip({
+	            	'selector': '',
+	                'placement': 'bottom'
+	            });
+
+	            // Nav
+	            var obj;
+				var i;
+
+	        	$(".submenu ul li > a").on('mouseover', function() {
+					obj = $(this);
+
+					obj.addClass('active');
+					obj.next().show();
+	        	}).on('mouseleave', function() {
+	        		objold = obj;
+	        		i = setTimeout(function() {
+            			objold.next().hide();
+        				objold.removeClass('active');
+					}, 50);
+	        	});
+
+	        	$(".submenu ul li > a").next().on('mouseover', function() {
+	        		clearInterval(i);
+	        	}).on('mouseleave', function() {
+	        		$(".submenu ul li > a").next().hide();
+	        		$(".submenu ul li > a").removeClass('active');
+	        	});
+			});
+		</script>
+
+		<script>
+			$(document).ready(function() {
+				$('.menuv .expand').click(function() {
+					if ($(this).hasClass('expanded')) {
+						$('.menuv .sub').slideUp();
+						$('.menuv .expand').removeClass('expanded');
+						$('.menuv .expand > i').removeClass('fa-angle-up').addClass('fa-angle-down');				
+					}
+					else {
+						$('.menuv .sub').slideUp();
+						$('.menuv .expand').removeClass('expanded');
+						$('.menuv .expand > i').removeClass('fa-angle-up').addClass('fa-angle-down');
+
+						$(this).addClass('expanded');
+						$(this).children('i').removeClass('fa-angle-down');
+						$(this).children('i').addClass('fa-angle-up');
+						$(this).siblings('ul').slideDown();
+					}
+
+					return false;
+				});
+			});
+		</script>
+		
+		<script>
+		$(document).ready(function() {
+			$(window).scroll(function() {
+				if ( $(this).scrollTop() ) {
+					$('#toTop').removeClass("btn-hide").fadeIn(1000);
+				} else {
+					$('#toTop').fadeOut(1000);
+				}
+			});
+
+			$("#toTop").click(function () {
+				$("html, body").animate({scrollTop: 0}, 1000);
+				return false;
+			});
+		});
+		</script>
+
+				<script>
+function imprimir_multipla(dados) {
+	BemaWeb.ConfiguraModeloImpressora(7);
+	BemaWeb.IniciaPorta("COM");
+	BemaWeb.BematechTX(dados); 
+	BemaWeb.FechaPorta(); 
+}
+
+function pegaapostas() {
+    var cookies = { };
+
+    if (document.cookie && document.cookie != '') {
+        var split = document.cookie.split(';');
+        for (var i = 0; i < split.length; i++) {
+            var name_value = split[i].split("=");
+            name_value[0] = name_value[0].replace(/^ /, '');
+            cookies[decodeURIComponent(name_value[0])] = decodeURIComponent(name_value[1]);
+        }
+    }
+
+    return cookies;
+}
+
+function exibeapostas() {
+	var cookies = pegaapostas();
+	for(var nomecookie in cookies) {
+
+  		if(nomecookie.indexOf('j.')==0 && cookies[nomecookie]!='null') {
+  			var dados = cookies[nomecookie].split('|');
+
+  			$('#tabapostas').append('<tr class="apostassb" id="'+dados[0]+'" jogo="'+dados[0]+'" mercado="'+dados[7]+'"><td><div class="container-jogo japostas tcen">'+dados[3]+' x '+dados[4]+'</div><div class="container-mercado">Mercado: <b>'+dados[7]+'</b></div><div class="container-apuesta">Apuesta: <span id="afavor" class="afavor"><b>'+dados[5]+'</b></span></div><div class="form tcen"><span class="todd">'+dados[6]+'</span><input name="txtidodds[]" id="txtidodds[]" type="hidden" value="'+dados[1]+'"><input name="txtodds[]" id="txtodds[]" class="hodd" type="hidden" value="'+dados[6]+'"><input name="txtapostastxt[]" id="txtapostastxt[]" class="haposta" type="hidden" value="'+dados[5]+'"><input name="txtapostas[]" id="txtapostas[]" onkeyup="calculatotais();" type="text" class="txtapostas tright>"><a href="javascript:removeaposta('+dados[0]+');" title="Cancelar Apuesta" class="fa fa-times-circle"></a></div></td></tr>');
+			
+			$("a[idodd='"+dados[1]+"']").removeClass('green');
+			$("a[idodd='"+dados[1]+"']").addClass('red');
+
+			calculamultiplas();
+	 	}
+	}
+}
+
+function gerenciatabapostas() {
+	if ($('#tabapostas tr').length>1) {
+		$('.msgsemapostas').hide();
+		$('.tabapostass').show();
+		$('.tabapostasm').show();
+	} else {
+		if ($('#tabapostas tr').length==1) {
+			$('.msgsemapostas').hide();
+			$('.tabapostasm').hide();
+			$('.tabapostass').show();
+		}
+		else {
+			$('.tabapostass').hide();
+			$('.tabapostasm').hide();
+			$('.msgsemapostas').show();
+		}
+	}
+}
+
+function calculatotais() {
+	var total_simples=0;
+	var resp_simples=0;
+
+	$('.todd').parent().each(function() {
+		if ($(this).find('.txtapostas').val()!='' && $(this).find('.txtapostas').val()!=undefined) {
+			total_simples+=Math.floor(($(this).find('.txtapostas').unmask()*$(this).find('.todd').text()-$(this).find('.txtapostas').unmask())*1.00);
+    		resp_simples+=$(this).find('.txtapostas').unmask()*1;
+    	}
+    });
+
+	$('.v_respsimples').html(resp_simples.toFixed(0));
+	$('.v_respsimples').priceFormat({
+		    prefix: '',
+		    suffix: '',
+		    thousandsSeparator: ',',
+		    centsLimit:0
+	});
+	$('.vapostado').html($('.v_respsimples').html());
+
+	$('.v_totalsimples').html(total_simples.toFixed(0));
+	$('.v_totalsimples').priceFormat({
+		    prefix: '',
+		    suffix: '',
+		    thousandsSeparator: ',',
+		    centsLimit:0
+	});
+
+	calculatotaismulti();
+}
+
+function calculatotaismulti() {
+
+    var valbothmbet = $('#txtapostam').unmask() + $('#txtapostamgs').unmask();
+    //console.log('valbothmbet -> ', valbothmbet );
+
+	if ( valbothmbet ) {
+		$('.v_respmulti').html((valbothmbet*1).toFixed(0));
+		$('.v_respmulti').priceFormat({
+		    prefix: '',
+		    suffix: '',
+		    thousandsSeparator: ',',
+		    centsLimit:0
+		});
+		$('.vapostadomulti').html($('.v_respmulti').html());
+
+		$('.v_totalmulti').html(Math.floor((valbothmbet*$('.toddmultipla').html()-valbothmbet)*1.00).toFixed(0));
+    	$('.v_totalmulti').priceFormat({
+		    prefix: '',
+		    suffix: '',
+		    thousandsSeparator: ',',
+		    centsLimit:0
+		});
+    }
+}
+
+function calculamultiplas() {
+	gerenciatabapostas();
+
+    var valbothmbet = $('#txtapostam').unmask() + ($('#txtapostamgs').unmask() ? $('#txtapostamgs').unmask() / 5000 : 0);
+    console.log('valbothmbet x -> ', valbothmbet );
+
+	$('#oddmultipla').val(1);
+	var qtdcombinada=0;
+	$('.todd').each(function() {
+		qtdcombinada++; 
+		$('#oddmultipla').val(($('#oddmultipla').val()*$(this).html()));
+    });
+    
+    $('#qtdcombinada').html('Combinada ('+qtdcombinada+'): @'+$('.toddmultipla').html());
+
+	$('.toddmultipla').html(parseFloat($('#oddmultipla').val()).toFixed(2));
+	calculatotais();
+
+	if($('#oddmultipla').val()>10010000000 || (valbothmbet*$('.toddmultipla').html()-valbothmbet)*1.00>5000)
+		$.msgbox("La ganancia máxima és 20,000,000 Gs!<br /><br />Tiene que eliminar algunos de los juegos de la combinada o disminuir la cantidad de su apuesta.", {
+			type: "alert",
+			buttons : [
+			    {type: "cancel", value: "Volver"}
+			  ]});
+}
+
+
+
+function removeaposta(jogo) {
+	$('#'+jogo).remove();
+	$("#jogos tr[jogo='"+jogo+"'] td").find("a").removeClass('red');
+	$("#jogos tr[jogo='"+jogo+"'] td").find("a").addClass('green');
+	//$.cookie('j.'+jogo, null, {path: "/", expires: -1});
+	$.removeCookie('j.'+jogo, { path: '/' });
+	calculamultiplas();
+}
+
+$(document).ready(function() {
+	
+	$(function(){
+		$('.txtapostas').priceFormat({
+		    prefix: '',
+		    thousandsSeparator: ',',
+		    centsLimit:0
+		});		
+	});
+
+	$(function(){
+		$('#txtapostam, #txtapostamgs, .txtapostas').priceFormat({
+		    prefix: '',
+		    thousandsSeparator: ',',
+		    centsLimit:0
+		});		
+	});
+
+	exibeapostas();
+
+	$('.limparapostas').bind('click', function() {
+		$('.apostassb').each(function() {
+			$('#'+$(this).attr('jogo')).remove();
+			$("#jogos tr[jogo='"+$(this).attr('jogo')+"'] td").find("a").removeClass('red');
+			$("#jogos tr[jogo='"+$(this).attr('jogo')+"'] td").find("a").addClass('green');
+			$.removeCookie('j.'+$(this).attr('jogo'), { path: '/' });
+			calculamultiplas();
+    	});
+	});
+
+	$('.btodd').bind('click touchstart', function() {
+		$(this).parent().parent().find("a").removeClass('red');
+		$(this).parent().parent().find("a").addClass('green');
+		$(this).removeClass('green');
+		$(this).addClass('red');
+		if($("#"+$(this).parent().parent().attr('jogo')).length) {
+			$("#"+$(this).parent().parent().attr('jogo')).remove();
+		}
+
+		$('#tabapostas').append('<tr class="apostassb" id="'+$(this).parent().parent().attr('jogo')+'" jogo="'+$(this).parent().parent().attr('jogo')+'" mercado="'+$(this).parent().parent().parent().parent().parent().attr("mercado")+'"><td><div class="container-jogo japostas tcen">'+$(this).parent().siblings('#teamA').html()+' X '+$(this).parent().siblings('#teamB').html()+'</div><div class="container-mercado">Mercado: <b>'+$(this).parent().parent().parent().parent().parent().attr('mercado')+'</b></div><div class="container-apuesta">Apuesta: <span id="afavor" class="afavor"><b>'+$(this).attr("aposta")+'</b></span></div><div class="form tcen"><span class="todd">'+$(this).html()+'</span><input name="txtidodds[]" id="txtidodds[]" type="hidden" value="'+$(this).attr("idodd")+'"><input name="txtapostastxt[]" id="txtapostastxt[]" class="haposta" type="hidden" value="'+$(this).attr("aposta")+'"><input name="txtodds[]" id="txtodds[]" class="hodd" type="hidden" value="'+$(this).html()+'"><input name="txtapostas[]" id="txtapostas[]" onkeyup="calculatotais();" type="text" class="txtapostas tright"><a href="javascript:removeaposta('+$(this).parent().parent().attr('jogo')+');" title="Cancelar Apuesta" class="fa fa-times-circle"></a></div></td></tr>');
+
+		calculamultiplas();
+
+		$.cookie('j.'+$(this).parent().parent().attr('jogo'), $(this).parent().parent().attr('jogo')+'|'+$(this).attr("idodd")+'|'+$(this).attr("bet")+'|'+$(this).parent().siblings('#teamA').html()+'|'+$(this).parent().siblings('#teamB').html()+'|'+$(this).attr("aposta")+'|'+$(this).html()+'|'+$(this).parent().parent().parent().parent().parent().attr("mercado"), {path: "/", expires: 1});
+	});
+
+	$('.btapostas').bind('click', function() {
+		var errotr=true;
+		if($('#cliente').val()=="") {
+			$.msgbox("Introduzca el Nombre del Cliente.", {
+				type: "alert",
+				buttons : [
+				    {type: "cancel", value: "Volver"}
+				  ]});
+			errotr=true;
+			return false;
+		}
+	
+
+		$('.txtapostas').each(function() {
+			if($(this).unmask()>0) {
+				errotr=false;
+				return false;
+			}
+		});
+
+		if(errotr==false) {
+			$('.btapostas').html('Aguarde...');
+			$.post('/apuestas/simples',
+				$('#form-apostas').serialize(),
+				function(data){
+					if(data["erro"]){
+						var msgboxerro="";
+						var msgbox="";
+						for (var i=0; i<data["jogos"].length; i++) {
+							switch(data["jogos"][i]["erro"]) {
+								case "odd":
+									msgboxerro=msgboxerro+'<p>'+$('#'+data["jogos"][i]["jogo"]).find(".japosta").html()+"<span class='cred'>Odd cambió</span></p>";
+									$('#'+data["jogos"][i]["jogo"]+' .todd').html(data["jogos"][i]["odd"]);
+				  					$('#'+data["jogos"][i]["jogo"]+' .hodd').val(data["jogos"][i]["odd"]);
+				  					$('#jogos tr[jogo='+data["jogos"][i]["jogo"]+'] .red').html(data["jogos"][i]["odd"]);
+
+									var dados = $.cookie('j.'+data["jogos"][i]["jogo"]).split('|');
+
+									$.cookie('j.'+data["jogos"][i]["jogo"], data["jogos"][i]["jogo"]+'|'+data["jogos"][i]["idodd"]+'|'+dados[2]+'|'+dados[3]+'|'+dados[4]+'|'+dados[5]+'|'+data["jogos"][i]["odd"], {path: "/", expires: 1});
+									break;
+								case "nsy":
+									msgboxerro=msgboxerro+'<p>'+$('#'+data["jogos"][i]["jogo"]).find(".japosta").html()+"<span class='cred'>El juego ya fué iniciado</span></p>";
+									removeaposta(data["jogos"][i]["jogo"]);
+									$('#jogos tr[jogo='+data["jogos"][i]["jogo"]+']').remove();
+			  						break;
+								case "saldo":
+									msgboxerro=msgboxerro+'<p>'+$('#'+data["jogos"][i]["jogo"]).find(".japosta").html()+"<span class='cred'>Saldo insuficiente</span></p>";
+									break;
+								case "maximo":
+									msgboxerro=msgboxerro+'<p>'+$('#'+data["jogos"][i]["jogo"]).find(".japosta").html()+"<span class='cred'>Apuesta máxima és 20,000,000 Gs</span></p>";
+									break;
+								case "ganomaximo":
+									msgboxerro=msgboxerro+'<p>'+$('#'+data["jogos"][i]["jogo"]).find(".japosta").html()+"<span class='cred'>La ganancia máxima és 20,000,000 Gs</span></p>";
+									break;
+								case "minimo":
+									msgboxerro=msgboxerro+'<p>'+$('#'+data["jogos"][i]["jogo"]).find(".japosta").html()+"<span class='cred'>Apuesta minima és 5,000 Gs</span></p>";
+									break;
+								case "nao":
+									msgbox=msgbox+"<p>"+$('#'+data["jogos"][i]["jogo"]).find(".japosta").html()+"<span class='cgreen'>Apuesta confirmada</span></p>";
+									break;
+								case "repetida":
+									msgboxerro=msgboxerro+'<p>'+$('#'+data["jogos"][i]["jogo"]).find(".japosta").html()+"<span class='cred'>Apuesta Repetida (aguarde 10 segs)</span></p>";
+									break;
+								case "cupom":
+									msgboxerro=msgboxerro+'<p>'+$('#'+data["jogos"][i]["jogo"]).find(".japosta").html()+"<span class='cred'>El CUPON ya fué utilizado!</span></p>";
+									break;
+							}
+						}
+						if (msgbox=="") {
+							$.msgbox(msgboxerro, {
+								type: "alert",
+								buttons : [
+								    {type: "cancel", value: "Continuar"}
+								  ]});
+						}
+						else {
+							for (a=0; a<data["nimpapostas"]; a++) {
+								imprimir_multipla(String.fromCharCode(27)+String.fromCharCode(86)+String.fromCharCode(27)+String.fromCharCode(87)+String.fromCharCode(1)+"        APOSTA.LA\r\n\r\n");
+								imprimir_multipla(String.fromCharCode(27)+String.fromCharCode(64)+String.fromCharCode(27)+String.fromCharCode(69)+String.fromCharCode(27)+String.fromCharCode(86)+data["imprimir0"][a]);
+								imprimir_multipla(String.fromCharCode(27)+String.fromCharCode(64)+data["imprimir1"][a]);
+								imprimir_multipla(String.fromCharCode(27)+String.fromCharCode(64)+String.fromCharCode(27)+String.fromCharCode(69)+data["imprimir2"][a]+"\r\n\r\n\r\n\r\n\r\n\r\n"+String.fromCharCode(27)+String.fromCharCode(119));
+							}
+							$.msgbox(msgbox+msgboxerro+"<p class='pergunta'>Desea borrar de su lista los juegos apostados?</p>", {
+								  type: "info",
+								  buttons : [
+								    {type: "submit", value: "Si, borrar"},
+								    {type: "cancel", value: "No, quiero mantener"}
+								  ]
+								}, function(result) {
+								  if(result=="Si, borrar") {
+									for (var i=0; i<data["jogos"].length; i++) {
+										if(data["jogos"][i]["erro"]=="nao") {
+										  	$('#'+data["jogos"][i]["jogo"]).remove();
+											$("#jogos tr[jogo='"+data["jogos"][i]["jogo"]+"'] td").find("a").removeClass('red');
+											$("#jogos tr[jogo='"+data["jogos"][i]["jogo"]+"'] td").find("a").addClass('green');
+											$.cookie('j.'+data["jogos"][i]["jogo"], null, {path: "/"});
+										}
+									}
+									calculamultiplas();
+								  }
+								}
+							);
+						}
+
+						$('.saldo').html('$'+data["saldo"]);
+						$('.btapostas').html('Apuesta Simple');
+					}
+					else {
+						$.msgbox("Informe el código "+data["codterm"]+"<br />en nuestros puntos de venta!", {
+								  type: "info",
+								  buttons : [
+								    {type: "cancel", value: "Continuar"}
+								  ]
+								}
+						);
+						$('.btapostas').html('Apuesta Simple');
+					}
+				}
+			);
+		} else {
+			$.msgbox("No hay apuestas! <br /><br />Favor colocar sus valores.", {
+				type: "alert",
+				buttons : [
+				    {type: "cancel", value: "Volver"}
+				  ]});
+			$('.btapostas').html('Apuesta Simple');
+			return false;
+		}
+	});
+
+	$('.btapostam').bind('click', function() {
+		if($('#cliente').val()=="") {
+			$.msgbox("Introduzca el Nombre del Cliente.", {
+				type: "alert",
+				buttons : [
+				    {type: "cancel", value: "Volver"}
+				  ]});
+			return false;
+		}
+
+        var valbothmbet = $('#txtapostam').unmask() + ($('#txtapostamgs').unmask() ? $('#txtapostamgs').unmask() / 5000 : 0);
+
+		if(valbothmbet<1) {
+			$.msgbox("Apuesta mínima es de 5,000 Gs !<br /><br />Tiene que cambiar el valor de su apuesta.", {
+				type: "alert",
+				buttons : [
+				    {type: "cancel", value: "Volver"}
+				  ]});
+
+			return false;
+		}
+
+		if((valbothmbet*$('.toddmultipla').html()-valbothmbet)*1.00>5000000000000000000) {
+			$.msgbox("El gano máximo es 20,000,000 Gs!<br /><br />Tiene que eliminar algunos de los juegos de la combinada o disminuir la cantidad de su apuesta.", {
+				type: "alert",
+				buttons : [
+				    {type: "cancel", value: "Volver"}
+				  ]});
+
+			return false;
+		}
+
+		$('.btapostam').html('Aguarde...');
+		$.post('/apuestas/combinada',
+			$('#form-apostas').serialize(),
+			function(data){
+				if(data["erro"]){
+					switch(data["jogos"][0]["erro"]) {
+						case "nopuede":
+							var msgbox="Apuesta en CAMPEON no puede ser combinada!";
+							break;
+						case "odd":
+						case "nsy":
+							for (var i=0; i<data["jogos"].length; i++) {
+	  							if (data["jogos"][i]["erro"]=="odd"){
+		  							$('#'+data["jogos"][i]["jogo"]+' .todd').html(data["jogos"][i]["odd"]);
+		  							$('#'+data["jogos"][i]["jogo"]+' .hodd').val(data["jogos"][i]["odd"]);
+		  							$('#jogos tr[jogo='+data["jogos"][i]["jogo"]+'] .red').html(data["jogos"][i]["odd"]);
+
+									var dados = $.cookie('j.'+data["jogos"][i]["jogo"]).split('|');
+
+									$.cookie('j.'+data["jogos"][i]["jogo"], data["jogos"][i]["jogo"]+'|'+data["jogos"][i]["idodd"]+'|'+dados[2]+'|'+dados[3]+'|'+dados[4]+'|'+dados[5]+'|'+data["jogos"][i]["odd"], {path: "/", expires: 1});
+		  						} else {
+		  							if (data["jogos"][i]["erro"]=="nsy")
+		  								removeaposta(data["jogos"][i]["jogo"]);
+										$('#jogos tr[jogo='+data["jogos"][i]["jogo"]+']').remove();
+		  						}
+  							}
+  							calculamultiplas();
+  							var msgbox="APUESTA NO FUE CONFIRMADA!<br /><br />Hay cambio en sus apuestas!<br /><br />Verifique y si aceptar hace de nuevo la apuesta.";
+							break;
+						case "saldo":
+							var msgbox="APUESTA NO FUE CONFIRMADA!<br /><br />No hay sueldo suficiente en su cuenta.";
+							break;
+						case "maximo":
+							var msgbox="APUESTA NO FUE CONFIRMADA!<br /><br />Su apuesta combinada debe ser máximo 20,000,000 Gs";
+							break;
+						case "ganomaximo":
+							var msgbox="APUESTA NO FUE CONFIRMADA!<br /><br />Su apuesta combinada excede el gano máximo de 20,000,000 Gs";
+							break;
+						case "minimo":
+							var msgbox="APUESTA NO FUE CONFIRMADA!<br /><br />Apuesta minima es de 5,000 Gs";
+							break;
+						case "repetida":
+							var msgbox="YA HAY UNA APUESTA EN SISTEMA!<br /><br />Aguarde 10 segundos para hacer otra igual!";
+							break;
+						case "cupom":
+							var msgbox="El CUPON ya fué utilizado!<br /><br />Contactar FERNANDO!";
+							break;
+					}
+
+					$.msgbox(msgbox, {
+						type: "alert",
+						buttons : [
+						    {type: "cancel", value: "Continuar"}
+						]
+					});
+					$('.btapostam').html('Apuesta Combinada');
+				}
+				else {
+					$.msgbox("Informe el código "+data["codterm"]+"<br />en nuestros puntos de venta!", {
+						  type: "info",
+						  buttons : [
+						    {type: "cancel", value: "Continuar"}
+						  ]
+						}
+					);
+					$('.btapostam').html('Apuesta Combinada');
+					$('#txtapostam, #txtapostamgs').val('');
+					$('.v_respmulti').html('0');
+					$('.v_totalmulti').html('0');
+					calculatotaismulti();
+				}
+			}
+		);
+	});
+
+});
+</script>		
+	</head>
+
+	<body>
+
+		<a href="#toTop" id="toTop" class="btn-top fa fa-angle-up btn-hide"></a>
+		
+		<div id="headerprint" style="display: none;">
+	<img src="/assets/images/americanbet-logo-print.jpg?45" width="700" height="80">
+</div>
+
+<section class="top">
+	<div class="container center">
+		
+		<a href="/" class="logo left tab">
+			<img src="/assets/images/americanbet.png" alt="American Bet">
+		</a>
+		
+		
+		<ul class="menu right">
+			<li class="active"> <a href="/apuestas/top">Top Futbol</a> </li>
+			<li> <a href="/tenis/top">Top Tenis</a> </li>
+			<li> <a href="/apuestas/standard/hoy">Hoy</a> </li>
+			<li> <a href="/apuestas/standard/manana">Mañana</a> </li>
+			<li> <a href="/apuestas/proximosenvivo">En Vivo</a> </li>
+			<li> <a href="/apuestas/resultados">Resultados</a> </li>
+            
+                        <li> <a href="/reglamento">Reglamento</a> </li>
+            		</ul>
+		 
+	</div>
+</section>		
+		<section class="container center">
+			<section class="nav left">
+				<section class="box futbol">
+					<h1> <a href="/"> Futbol </a> <i class="ico_futbol right"></i></h1>
+					
+					<ul class="menuv">
+						<li>
+							<a href="#América" class="expand">América <i class="fa fa-angle-down right"></i> </a>
+							
+							<ul class="sub">
+																							<li><a href="/apuestas/standard/203"> Argentina </a></li>
+																							<li><a href="/apuestas/standard/183"> Brasil </a></li>
+																							<li><a href="/apuestas/standard/197"> Colombia </a></li>
+																							<li><a href="/apuestas/standard/198"> Costa Rica </a></li>
+																							<li><a href="/apuestas/standard/138"> Ecuador </a></li>
+																							<li><a href="/apuestas/standard/4"> Estados Unidos </a></li>
+																							<li><a href="/apuestas/standard/218"> Mexico </a></li>
+																							<li><a href="/apuestas/standard/34"> Nicaragua </a></li>
+																							<li><a href="/apuestas/standard/231"> Venezuela </a></li>
+														</ul>
+						</li>
+
+						<li>
+							<a href="#Europa" class="expand">Europa <i class="fa fa-angle-down right"></i> </a>
+							<ul class="sub">
+																<li>
+																<a href="/apuestas/standard/161"> Alemania </a></li>
+															<li>
+																<a href="/apuestas/standard/171"> Austria </a></li>
+															<li>
+																<a href="/apuestas/standard/176"> Belgica </a></li>
+															<li>
+																<a href="/apuestas/standard/55"> Croacia </a></li>
+															<li>
+																<a href="/apuestas/standard/135"> Dinamarca </a></li>
+															<li>
+																<a href="/apuestas/standard/240"> Escocia </a></li>
+															<li>
+																<a href="/apuestas/standard/86"> Eslovaquia </a></li>
+															<li>
+																<a href="/apuestas/standard/142"> España </a></li>
+															<li>
+																<a href="/apuestas/standard/139"> Estonia </a></li>
+															<li>
+																<a href="/apuestas/standard/143"> Finlandia </a></li>
+															<li>
+																<a href="/apuestas/standard/147"> Francia </a></li>
+															<li>
+																<a href="/apuestas/standard/242"> Gales </a></li>
+															<li>
+																<a href="/apuestas/standard/48"> Grecia </a></li>
+															<li>
+																<a href="/apuestas/standard/122"> Holanda </a></li>
+															<li>
+																<a href="/apuestas/standard/57"> Hungria </a></li>
+															<li>
+																<a href="/apuestas/standard/243"> Inglaterra </a></li>
+															<li>
+																<a href="/apuestas/standard/59"> Irlanda </a></li>
+															<li>
+																<a href="/apuestas/standard/241"> Irlanda del Norte </a></li>
+															<li>
+																<a href="/apuestas/standard/213"> Islandia </a></li>
+															<li>
+																<a href="/apuestas/standard/60"> Israel </a></li>
+															<li>
+																<a href="/apuestas/standard/215"> Italia </a></li>
+															<li>
+																<a href="/apuestas/standard/36"> Latvia </a></li>
+															<li>
+																<a href="/apuestas/standard/128"> Lituania </a></li>
+															<li>
+																<a href="/apuestas/standard/123"> Noruega </a></li>
+															<li>
+																<a href="/apuestas/standard/22"> Polonia </a></li>
+															<li>
+																<a href="/apuestas/standard/76"> Portugal </a></li>
+															<li>
+																<a href="/apuestas/standard/202"> República Checa </a></li>
+															<li>
+																<a href="/apuestas/standard/78"> Rumania </a></li>
+															<li>
+																<a href="/apuestas/standard/79"> Rusia </a></li>
+															<li>
+																<a href="/apuestas/standard/244"> Serbia </a></li>
+															<li>
+																<a href="/apuestas/standard/83"> Suecia </a></li>
+															<li>
+																<a href="/apuestas/standard/192"> Suiza </a></li>
+															<li>
+																<a href="/apuestas/standard/103"> Turquia </a></li>
+															<li>
+																<a href="/apuestas/standard/229"> Ucrania </a></li>
+														</ul>
+						</li>
+
+						<li>
+							<a href="#Resto del Mundo" class="expand">Resto del Mundo <i class="fa fa-angle-down right"></i> </a>
+							<ul class="sub">
+																								<li><a href="/apuestas/standard/137"> Argelia </a></li>
+																								<li><a href="/apuestas/standard/172"> Australia </a></li>
+																								<li><a href="/apuestas/standard/179"> Bahrain </a></li>
+																								<li><a href="/apuestas/standard/204"> Bangladesh </a></li>
+																								<li><a href="/apuestas/standard/196"> China </a></li>
+																								<li><a href="/apuestas/standard/154"> Corea del Sur </a></li>
+																								<li><a href="/apuestas/standard/61"> India </a></li>
+																								<li><a href="/apuestas/standard/148"> Japon </a></li>
+																								<li><a href="/apuestas/standard/64"> Jordan </a></li>
+																								<li><a href="/apuestas/standard/17"> Oman </a></li>
+																								<li><a href="/apuestas/standard/163"> UAE </a></li>
+																								<li><a href="/apuestas/standard/9"> Vietnam </a></li>
+															</ul>
+						</li>
+						
+						<li> <a href="/apuestas/standard/248">Internacionales <i class="icon-arrow-right right"></i></a> </li>
+						<li> <a href="/apuestas/clasifsudamerica">Eliminat. Sudamérica <i class="icon-arrow-right right"></i></a> </li>
+						<li> <a href="/apuestas/europaleague">Europa League <i class="icon-arrow-right right"></i></a> </li>
+						<li> <a href="/apuestas/championsleague">Champions League <i class="icon-arrow-right right"></i></a> </li>
+						<li> <a href="/apuestas/mundialdeclubes">Mundial de Clubes FIFA <i class="icon-arrow-right right"></i></a> </li>
+					</ul>
+
+										<h1> <a href="#">Tenis</a>  <i class="ico_tenis right"></i></h1>
+					<ul class="menuv">
+													<li>
+															<a href="/tenis/standard/196"> China <i class="icon-arrow-right right"></i> </a></li>
+													<li>
+															<a href="/tenis/standard/154"> Corea del Sur <i class="icon-arrow-right right"></i> </a></li>
+													<li>
+															<a href="/tenis/standard/4"> Estados Unidos <i class="icon-arrow-right right"></i> </a></li>
+													<li>
+															<a href="/tenis/standard/42"> Georgia <i class="icon-arrow-right right"></i> </a></li>
+													<li>
+															<a href="/tenis/standard/61"> India <i class="icon-arrow-right right"></i> </a></li>
+													<li>
+															<a href="/tenis/standard/248"> Internacional <i class="icon-arrow-right right"></i> </a></li>
+													<li>
+															<a href="/tenis/standard/60"> Israel <i class="icon-arrow-right right"></i> </a></li>
+													<li>
+															<a href="/tenis/standard/148"> Japon <i class="icon-arrow-right right"></i> </a></li>
+													<li>
+															<a href="/tenis/standard/30"> Tailandia <i class="icon-arrow-right right"></i> </a></li>
+											</ul>
+					
+										<h1> <a href="#">Baloncesto</a> <i class="ico_baloncesto right"></i></h1>
+					<ul class="menuv">
+													<li><a href="/baloncesto/standard/2198991"> WNBA <i class="icon-arrow-right right"></i> </a></li>
+											</ul>
+					
+					<h1> <a href="#">Voleibol</a> <i class="ico_voleibol right"></i></h1>
+					<ul class="menuv">
+													<li><a href="/voleibol/standard/248"> Internacional <i class="icon-arrow-right right"></i> </a></li>
+											</ul>
+					
+										<h1> <a href="#">Béisbol</a> <i class="ico_beisbol right"></i></h1>
+					<ul class="menuv">
+													<li><a href="/beisbol/standard/4"> Estados Unidos <i class="icon-arrow-right right"></i> </a></li>
+													<li><a href="/beisbol/standard/248"> Internacional <i class="icon-arrow-right right"></i> </a></li>
+											</ul>
+					
+					
+					
+										<h1> <a href="#">Americanos</a> <i class="ico_americanos right"></i></h1>
+					<ul class="menuv">
+													<li><a href="/apuestas/deporte/2143375"> Major League Soccer <i class="icon-arrow-right right"></i> </a></li>
+													<li><a href="/apuestas/deporte/2117830"> MLB <i class="icon-arrow-right right"></i> </a></li>
+													<li><a href="/apuestas/deporte/2227904"> NASL - Fall Season <i class="icon-arrow-right right"></i> </a></li>
+													<li><a href="/apuestas/deporte/2228495"> NCAA Football <i class="icon-arrow-right right"></i> </a></li>
+													<li><a href="/apuestas/deporte/2181425"> NFL <i class="icon-arrow-right right"></i> </a></li>
+													<li><a href="/apuestas/deporte/2178532"> NWSL <i class="icon-arrow-right right"></i> </a></li>
+													<li><a href="/apuestas/deporte/2164172"> USL <i class="icon-arrow-right right"></i> </a></li>
+													<li><a href="/apuestas/deporte/2198991"> WNBA <i class="icon-arrow-right right"></i> </a></li>
+											</ul>
+									</section>
+			</section>
+
+			<section class="main left">
+				
+
+
+		<section class="box table" id="box_1" mercado="Partido (tiempo reglamentario)">		
+	<h1> <span>Brasil - Brasileirão A</span> </h1>
+	<table id="jogos">
+		<tr>
+			<th>07/09</th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th class="tcen">1</th>
+			<th class="tcen">X</th>
+			<th class="tcen">2</th>
+			<th></th>
+		</tr>
+			<tr jogo="2198150" tipoodd="1">
+			<td class="tcen" width="40"><span class="hour">18h30</span></td>
+			<td id="teamA" class="tright" width="132">Atlético Mineiro</td>
+			<td class="tcen" width="15">x</td>
+			<td id="teamB" class="tleft" width="132">Vitória</td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Atlético Mineiro" bet="1" idodd="7730544522198150" title="Atlético Mineiro" class="btodd button green">1.40</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Empate" bet="X" idodd="7730544272198150" title="Empate" class="btodd button green">4.75</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Vitória" bet="2" idodd="7730544492198150" title="Vitória" class="btodd button green">7.00</a></td>
+			<td class="tcen" width="40"><a href="/apuestas/jogo/2198150" title="+ mercados" class="list"><i class="fa fa-list-alt"></i></a></td>
+		</tr>
+				<tr jogo="2198144" tipoodd="1">
+			<td class="tcen" width="40"><span class="hour">20h45</span></td>
+			<td id="teamA" class="tright" width="132">Flamengo</td>
+			<td class="tcen" width="15">x</td>
+			<td id="teamB" class="tleft" width="132">Ponte Preta</td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Flamengo" bet="1" idodd="17838262932198144" title="Flamengo" class="btodd button green">1.67</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Empate" bet="X" idodd="17838263182198144" title="Empate" class="btodd button green">3.50</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Ponte Preta" bet="2" idodd="17838262962198144" title="Ponte Preta" class="btodd button green">5.75</a></td>
+			<td class="tcen" width="40"><a href="/apuestas/jogo/2198144" title="+ mercados" class="list"><i class="fa fa-list-alt"></i></a></td>
+		</tr>
+				<tr jogo="2198146" tipoodd="1">
+			<td class="tcen" width="40"><span class="hour">20h45</span></td>
+			<td id="teamA" class="tright" width="132">Coritiba</td>
+			<td class="tcen" width="15">x</td>
+			<td id="teamB" class="tleft" width="132">Grêmio</td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Coritiba" bet="1" idodd="17838981672198146" title="Coritiba" class="btodd button green">2.40</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Empate" bet="X" idodd="17838980642198146" title="Empate" class="btodd button green">3.10</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Grêmio" bet="2" idodd="17838981662198146" title="Grêmio" class="btodd button green">3.10</a></td>
+			<td class="tcen" width="40"><a href="/apuestas/jogo/2198146" title="+ mercados" class="list"><i class="fa fa-list-alt"></i></a></td>
+		</tr>
+				<tr jogo="2198152" tipoodd="1">
+			<td class="tcen" width="40"><span class="hour">20h45</span></td>
+			<td id="teamA" class="tright" width="132">Palmeiras</td>
+			<td class="tcen" width="15">x</td>
+			<td id="teamB" class="tleft" width="132">São Paulo</td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Palmeiras" bet="1" idodd="7729825782198152" title="Palmeiras" class="btodd button green">1.73</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Empate" bet="X" idodd="7729826812198152" title="Empate" class="btodd button green">3.50</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="São Paulo" bet="2" idodd="7729825792198152" title="São Paulo" class="btodd button green">5.00</a></td>
+			<td class="tcen" width="40"><a href="/apuestas/jogo/2198152" title="+ mercados" class="list"><i class="fa fa-list-alt"></i></a></td>
+		</tr>
+			</table>
+	</section>
+			<section class="box table" id="box_1" mercado="Partido (tiempo reglamentario)">		
+	<h1> <span>Brasil - Brasileirão A</span> </h1>
+	<table id="jogos">
+		<tr>
+			<th>08/09</th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th class="tcen">1</th>
+			<th class="tcen">X</th>
+			<th class="tcen">2</th>
+			<th></th>
+		</tr>
+			<tr jogo="2198145" tipoodd="1">
+			<td class="tcen" width="40"><span class="hour">18h30</span></td>
+			<td id="teamA" class="tright" width="132">Corinthians</td>
+			<td class="tcen" width="15">x</td>
+			<td id="teamB" class="tleft" width="132">Sport Recife</td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Corinthians" bet="1" idodd="17839317982198145" title="Corinthians" class="btodd button green">1.57</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Empate" bet="X" idodd="17839317572198145" title="Empate" class="btodd button green">3.80</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Sport Recife" bet="2" idodd="17839317992198145" title="Sport Recife" class="btodd button green">6.00</a></td>
+			<td class="tcen" width="40"><a href="/apuestas/jogo/2198145" title="+ mercados" class="list"><i class="fa fa-list-alt"></i></a></td>
+		</tr>
+				<tr jogo="2198143" tipoodd="1">
+			<td class="tcen" width="40"><span class="hour">20h00</span></td>
+			<td id="teamA" class="tright" width="132">Internacional</td>
+			<td class="tcen" width="15">x</td>
+			<td id="teamB" class="tleft" width="132">Santos</td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Internacional" bet="1" idodd="17838599242198143" title="Internacional" class="btodd button green">2.10</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Empate" bet="X" idodd="17838600112198143" title="Empate" class="btodd button green">3.40</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Santos" bet="2" idodd="17838599212198143" title="Santos" class="btodd button green">3.40</a></td>
+			<td class="tcen" width="40"><a href="/apuestas/jogo/2198143" title="+ mercados" class="list"><i class="fa fa-list-alt"></i></a></td>
+		</tr>
+				<tr jogo="2198151" tipoodd="1">
+			<td class="tcen" width="40"><span class="hour">20h00</span></td>
+			<td id="teamA" class="tright" width="132">América Mineiro</td>
+			<td class="tcen" width="15">x</td>
+			<td id="teamB" class="tleft" width="132">Cruzeiro</td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="América Mineiro" bet="1" idodd="7729489472198151" title="América Mineiro" class="btodd button green">4.00</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Empate" bet="X" idodd="7729489882198151" title="Empate" class="btodd button green">3.30</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Cruzeiro" bet="2" idodd="7729489462198151" title="Cruzeiro" class="btodd button green">1.95</a></td>
+			<td class="tcen" width="40"><a href="/apuestas/jogo/2198151" title="+ mercados" class="list"><i class="fa fa-list-alt"></i></a></td>
+		</tr>
+			</table>
+	</section>
+			<section class="box table" id="box_1" mercado="Partido (tiempo reglamentario)">		
+	<h1> <span>Alemania - Bundesliga</span> </h1>
+	<table id="jogos">
+		<tr>
+			<th>09/09</th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th class="tcen">1</th>
+			<th class="tcen">X</th>
+			<th class="tcen">2</th>
+			<th></th>
+		</tr>
+			<tr jogo="2242483" tipoodd="1">
+			<td class="tcen" width="40"><span class="hour">14h30</span></td>
+			<td id="teamA" class="tright" width="132">FC Schalke 04</td>
+			<td class="tcen" width="15">x</td>
+			<td id="teamB" class="tleft" width="132">FC Bayern München</td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="FC Schalke 04" bet="1" idodd="7484157952242483" title="FC Schalke 04" class="btodd button green">9.00</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Empate" bet="X" idodd="7484158342242483" title="Empate" class="btodd button green">5.50</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="FC Bayern München" bet="2" idodd="7484157922242483" title="FC Bayern München" class="btodd button green">1.30</a></td>
+			<td class="tcen" width="40"><a href="/apuestas/jogo/2242483" title="+ mercados" class="list"><i class="fa fa-list-alt"></i></a></td>
+		</tr>
+			</table>
+	</section>
+			<section class="box table" id="box_1" mercado="Partido (tiempo reglamentario)">		
+	<h1> <span>Francia - Ligue 1</span> </h1>
+	<table id="jogos">
+		<tr>
+			<th>09/09</th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th class="tcen">1</th>
+			<th class="tcen">X</th>
+			<th class="tcen">2</th>
+			<th></th>
+		</tr>
+			<tr jogo="2210408" tipoodd="1">
+			<td class="tcen" width="40"><span class="hour">14h45</span></td>
+			<td id="teamA" class="tright" width="132">Paris SG</td>
+			<td class="tcen" width="15">x</td>
+			<td id="teamB" class="tleft" width="132">Saint-Étienne</td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Paris SG" bet="1" idodd="486295312210408" title="Paris SG" class="btodd button green">1.25</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Empate" bet="X" idodd="486294262210408" title="Empate" class="btodd button green">5.75</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Saint-Étienne" bet="2" idodd="486295322210408" title="Saint-Étienne" class="btodd button green">11.00</a></td>
+			<td class="tcen" width="40"><a href="/apuestas/jogo/2210408" title="+ mercados" class="list"><i class="fa fa-list-alt"></i></a></td>
+		</tr>
+			</table>
+	</section>
+			<section class="box table" id="box_1" mercado="Partido (tiempo reglamentario)">		
+	<h1> <span>Portugal - Primeira Liga</span> </h1>
+	<table id="jogos">
+		<tr>
+			<th>09/09</th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th class="tcen">1</th>
+			<th class="tcen">X</th>
+			<th class="tcen">2</th>
+			<th></th>
+		</tr>
+			<tr jogo="2277887" tipoodd="1">
+			<td class="tcen" width="40"><span class="hour">15h30</span></td>
+			<td id="teamA" class="tright" width="132">Arouca</td>
+			<td class="tcen" width="15">x</td>
+			<td id="teamB" class="tleft" width="132">Benfica</td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Arouca" bet="1" idodd="12249907992277887" title="Arouca" class="btodd button green">9.00</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Empate" bet="X" idodd="12249908382277887" title="Empate" class="btodd button green">4.50</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Benfica" bet="2" idodd="12249907962277887" title="Benfica" class="btodd button green">1.36</a></td>
+			<td class="tcen" width="40"><a href="/apuestas/jogo/2277887" title="+ mercados" class="list"><i class="fa fa-list-alt"></i></a></td>
+		</tr>
+			</table>
+	</section>
+			<section class="box table" id="box_1" mercado="Partido (tiempo reglamentario)">		
+	<h1> <span>España - LaLiga</span> </h1>
+	<table id="jogos">
+		<tr>
+			<th>10/09</th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th class="tcen">1</th>
+			<th class="tcen">X</th>
+			<th class="tcen">2</th>
+			<th></th>
+		</tr>
+			<tr jogo="2274299" tipoodd="1">
+			<td class="tcen" width="40"><span class="hour">07h00</span></td>
+			<td id="teamA" class="tright" width="132">Celta de Vigo</td>
+			<td class="tcen" width="15">x</td>
+			<td id="teamB" class="tleft" width="132">Atlético Madrid</td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Celta de Vigo" bet="1" idodd="17764348052274299" title="Celta de Vigo" class="btodd button green">5.25</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Empate" bet="X" idodd="17764347162274299" title="Empate" class="btodd button green">3.25</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Atlético Madrid" bet="2" idodd="17764348022274299" title="Atlético Madrid" class="btodd button green">1.80</a></td>
+			<td class="tcen" width="40"><a href="/apuestas/jogo/2274299" title="+ mercados" class="list"><i class="fa fa-list-alt"></i></a></td>
+		</tr>
+			</table>
+	</section>
+			<section class="box table" id="box_1" mercado="Partido (tiempo reglamentario)">		
+	<h1> <span>Inglaterra - Premier League</span> </h1>
+	<table id="jogos">
+		<tr>
+			<th>10/09</th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th class="tcen">1</th>
+			<th class="tcen">X</th>
+			<th class="tcen">2</th>
+			<th></th>
+		</tr>
+			<tr jogo="2222141" tipoodd="1">
+			<td class="tcen" width="40"><span class="hour">07h30</span></td>
+			<td id="teamA" class="tright" width="132">Manchester United</td>
+			<td class="tcen" width="15">x</td>
+			<td id="teamB" class="tleft" width="132">Manchester City</td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Manchester United" bet="1" idodd="7875349942222141" title="Manchester United" class="btodd button green">2.25</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Empate" bet="X" idodd="7875349532222141" title="Empate" class="btodd button green">3.25</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Manchester City" bet="2" idodd="7875349952222141" title="Manchester City" class="btodd button green">3.30</a></td>
+			<td class="tcen" width="40"><a href="/apuestas/jogo/2222141" title="+ mercados" class="list"><i class="fa fa-list-alt"></i></a></td>
+		</tr>
+			</table>
+	</section>
+			<section class="box table" id="box_1" mercado="Partido (tiempo reglamentario)">		
+	<h1> <span>España - LaLiga</span> </h1>
+	<table id="jogos">
+		<tr>
+			<th>10/09</th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th class="tcen">1</th>
+			<th class="tcen">X</th>
+			<th class="tcen">2</th>
+			<th></th>
+		</tr>
+			<tr jogo="2274290" tipoodd="1">
+			<td class="tcen" width="40"><span class="hour">10h00</span></td>
+			<td id="teamA" class="tright" width="132">Real Madrid</td>
+			<td class="tcen" width="15">x</td>
+			<td id="teamB" class="tleft" width="132">Osasuna</td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Real Madrid" bet="1" idodd="17761984922274290" title="Real Madrid" class="btodd button green">1.04</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Empate" bet="X" idodd="17761984532274290" title="Empate" class="btodd button green">15.00</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Osasuna" bet="2" idodd="17761984912274290" title="Osasuna" class="btodd button green">34.00</a></td>
+			<td class="tcen" width="40"><a href="/apuestas/jogo/2274290" title="+ mercados" class="list"><i class="fa fa-list-alt"></i></a></td>
+		</tr>
+			</table>
+	</section>
+			<section class="box table" id="box_1" mercado="Partido (tiempo reglamentario)">		
+	<h1> <span>Inglaterra - Premier League</span> </h1>
+	<table id="jogos">
+		<tr>
+			<th>10/09</th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th class="tcen">1</th>
+			<th class="tcen">X</th>
+			<th class="tcen">2</th>
+			<th></th>
+		</tr>
+			<tr jogo="2222137" tipoodd="1">
+			<td class="tcen" width="40"><span class="hour">10h00</span></td>
+			<td id="teamA" class="tright" width="132">Arsenal</td>
+			<td class="tcen" width="15">x</td>
+			<td id="teamB" class="tleft" width="132">Southampton</td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Arsenal" bet="1" idodd="20802520872222137" title="Arsenal" class="btodd button green">1.57</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Empate" bet="X" idodd="20802520002222137" title="Empate" class="btodd button green">4.00</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Southampton" bet="2" idodd="20802520902222137" title="Southampton" class="btodd button green">6.00</a></td>
+			<td class="tcen" width="40"><a href="/apuestas/jogo/2222137" title="+ mercados" class="list"><i class="fa fa-list-alt"></i></a></td>
+		</tr>
+			</table>
+	</section>
+			<section class="box table" id="box_1" mercado="Partido (tiempo reglamentario)">		
+	<h1> <span>Francia - Ligue 1</span> </h1>
+	<table id="jogos">
+		<tr>
+			<th>10/09</th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th class="tcen">1</th>
+			<th class="tcen">X</th>
+			<th class="tcen">2</th>
+			<th></th>
+		</tr>
+			<tr jogo="2210400" tipoodd="1">
+			<td class="tcen" width="40"><span class="hour">11h00</span></td>
+			<td id="teamA" class="tright" width="132">Lyon</td>
+			<td class="tcen" width="15">x</td>
+			<td id="teamB" class="tleft" width="132">Bordeaux</td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Lyon" bet="1" idodd="488996032210400" title="Lyon" class="btodd button green">1.67</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Empate" bet="X" idodd="488995142210400" title="Empate" class="btodd button green">3.75</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Bordeaux" bet="2" idodd="488996042210400" title="Bordeaux" class="btodd button green">5.00</a></td>
+			<td class="tcen" width="40"><a href="/apuestas/jogo/2210400" title="+ mercados" class="list"><i class="fa fa-list-alt"></i></a></td>
+		</tr>
+			</table>
+	</section>
+			<section class="box table" id="box_1" mercado="Partido (tiempo reglamentario)">		
+	<h1> <span>Italia - Serie A</span> </h1>
+	<table id="jogos">
+		<tr>
+			<th>10/09</th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th class="tcen">1</th>
+			<th class="tcen">X</th>
+			<th class="tcen">2</th>
+			<th></th>
+		</tr>
+			<tr jogo="2290641" tipoodd="1">
+			<td class="tcen" width="40"><span class="hour">12h00</span></td>
+			<td id="teamA" class="tright" width="132">Juventus</td>
+			<td class="tcen" width="15">x</td>
+			<td id="teamB" class="tleft" width="132">Sassuolo</td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Juventus" bet="1" idodd="21144964002290641" title="Juventus" class="btodd button green">1.29</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Empate" bet="X" idodd="21144963612290641" title="Empate" class="btodd button green">5.00</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Sassuolo" bet="2" idodd="21144963992290641" title="Sassuolo" class="btodd button green">12.00</a></td>
+			<td class="tcen" width="40"><a href="/apuestas/jogo/2290641" title="+ mercados" class="list"><i class="fa fa-list-alt"></i></a></td>
+		</tr>
+			</table>
+	</section>
+			<section class="box table" id="box_1" mercado="Partido (tiempo reglamentario)">		
+	<h1> <span>Alemania - Bundesliga</span> </h1>
+	<table id="jogos">
+		<tr>
+			<th>10/09</th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th class="tcen">1</th>
+			<th class="tcen">X</th>
+			<th class="tcen">2</th>
+			<th></th>
+		</tr>
+			<tr jogo="2242489" tipoodd="1">
+			<td class="tcen" width="40"><span class="hour">12h30</span></td>
+			<td id="teamA" class="tright" width="132">RB Leipzig</td>
+			<td class="tcen" width="15">x</td>
+			<td id="teamB" class="tleft" width="132">Borussia Dortmund</td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="RB Leipzig" bet="1" idodd="7480738492242489" title="RB Leipzig" class="btodd button green">5.25</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Empate" bet="X" idodd="7480737442242489" title="Empate" class="btodd button green">4.00</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Borussia Dortmund" bet="2" idodd="7480738502242489" title="Borussia Dortmund" class="btodd button green">1.60</a></td>
+			<td class="tcen" width="40"><a href="/apuestas/jogo/2242489" title="+ mercados" class="list"><i class="fa fa-list-alt"></i></a></td>
+		</tr>
+			</table>
+	</section>
+			<section class="box table" id="box_1" mercado="Partido (tiempo reglamentario)">		
+	<h1> <span>Holanda - Eredivisie</span> </h1>
+	<table id="jogos">
+		<tr>
+			<th>10/09</th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th class="tcen">1</th>
+			<th class="tcen">X</th>
+			<th class="tcen">2</th>
+			<th></th>
+		</tr>
+			<tr jogo="2222559" tipoodd="1">
+			<td class="tcen" width="40"><span class="hour">13h45</span></td>
+			<td id="teamA" class="tright" width="132">NEC</td>
+			<td class="tcen" width="15">x</td>
+			<td id="teamB" class="tleft" width="132">PSV Eindhoven</td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="NEC" bet="1" idodd="41862732222559" title="NEC" class="btodd button green">8.00</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Empate" bet="X" idodd="41862482222559" title="Empate" class="btodd button green">5.25</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="PSV Eindhoven" bet="2" idodd="41862742222559" title="PSV Eindhoven" class="btodd button green">1.33</a></td>
+			<td class="tcen" width="40"><a href="/apuestas/jogo/2222559" title="+ mercados" class="list"><i class="fa fa-list-alt"></i></a></td>
+		</tr>
+			</table>
+	</section>
+			<section class="box table" id="box_1" mercado="Partido (tiempo reglamentario)">		
+	<h1> <span>España - LaLiga</span> </h1>
+	<table id="jogos">
+		<tr>
+			<th>10/09</th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th class="tcen">1</th>
+			<th class="tcen">X</th>
+			<th class="tcen">2</th>
+			<th></th>
+		</tr>
+			<tr jogo="2274297" tipoodd="1">
+			<td class="tcen" width="40"><span class="hour">14h30</span></td>
+			<td id="teamA" class="tright" width="132">FC Barcelona</td>
+			<td class="tcen" width="15">x</td>
+			<td id="teamB" class="tleft" width="132">Alavés</td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="FC Barcelona" bet="1" idodd="17762366072274297" title="FC Barcelona" class="btodd button green">1.07</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Empate" bet="X" idodd="17762366302274297" title="Empate" class="btodd button green">12.00</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Alavés" bet="2" idodd="17762366082274297" title="Alavés" class="btodd button green">34.00</a></td>
+			<td class="tcen" width="40"><a href="/apuestas/jogo/2274297" title="+ mercados" class="list"><i class="fa fa-list-alt"></i></a></td>
+		</tr>
+			</table>
+	</section>
+			<section class="box table" id="box_1" mercado="Partido (tiempo reglamentario)">		
+	<h1> <span>Portugal - Primeira Liga</span> </h1>
+	<table id="jogos">
+		<tr>
+			<th>10/09</th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th class="tcen">1</th>
+			<th class="tcen">X</th>
+			<th class="tcen">2</th>
+			<th></th>
+		</tr>
+			<tr jogo="2277894" tipoodd="1">
+			<td class="tcen" width="40"><span class="hour">15h30</span></td>
+			<td id="teamA" class="tright" width="132">FC Porto</td>
+			<td class="tcen" width="15">x</td>
+			<td id="teamB" class="tleft" width="132">Vitória Guimarães</td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="FC Porto" bet="1" idodd="2759478572277894" title="FC Porto" class="btodd button green">1.36</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Empate" bet="X" idodd="2759478342277894" title="Empate" class="btodd button green">5.00</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Vitória Guimarães" bet="2" idodd="2759478602277894" title="Vitória Guimarães" class="btodd button green">7.50</a></td>
+			<td class="tcen" width="40"><a href="/apuestas/jogo/2277894" title="+ mercados" class="list"><i class="fa fa-list-alt"></i></a></td>
+		</tr>
+			</table>
+	</section>
+			<section class="box table" id="box_1" mercado="Partido (tiempo reglamentario)">		
+	<h1> <span>Argentina - Primera División </span> </h1>
+	<table id="jogos">
+		<tr>
+			<th>10/09</th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th class="tcen">1</th>
+			<th class="tcen">X</th>
+			<th class="tcen">2</th>
+			<th></th>
+		</tr>
+			<tr jogo="2319245" tipoodd="1">
+			<td class="tcen" width="40"><span class="hour">17h00</span></td>
+			<td id="teamA" class="tright" width="132">Defensa y Justicia</td>
+			<td class="tcen" width="15">x</td>
+			<td id="teamB" class="tleft" width="132">San Lorenzo</td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Defensa y Justicia" bet="1" idodd="18749936642319245" title="Defensa y Justicia" class="btodd button green">2.20</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Empate" bet="X" idodd="18749936872319245" title="Empate" class="btodd button green">3.30</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="San Lorenzo" bet="2" idodd="18749936652319245" title="San Lorenzo" class="btodd button green">3.25</a></td>
+			<td class="tcen" width="40"><a href="/apuestas/jogo/2319245" title="+ mercados" class="list"><i class="fa fa-list-alt"></i></a></td>
+		</tr>
+			</table>
+	</section>
+			<section class="box table" id="box_1" mercado="Partido (tiempo reglamentario)">		
+	<h1> <span>Italia - Serie A</span> </h1>
+	<table id="jogos">
+		<tr>
+			<th>11/09</th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th class="tcen">1</th>
+			<th class="tcen">X</th>
+			<th class="tcen">2</th>
+			<th></th>
+		</tr>
+			<tr jogo="2290634" tipoodd="1">
+			<td class="tcen" width="40"><span class="hour">09h00</span></td>
+			<td id="teamA" class="tright" width="132">AC Milan</td>
+			<td class="tcen" width="15">x</td>
+			<td id="teamB" class="tleft" width="132">Udinese</td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="AC Milan" bet="1" idodd="12316435762290634" title="AC Milan" class="btodd button green">1.60</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Empate" bet="X" idodd="12316436812290634" title="Empate" class="btodd button green">3.80</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Udinese" bet="2" idodd="12316435792290634" title="Udinese" class="btodd button green">5.75</a></td>
+			<td class="tcen" width="40"><a href="/apuestas/jogo/2290634" title="+ mercados" class="list"><i class="fa fa-list-alt"></i></a></td>
+		</tr>
+			</table>
+	</section>
+			<section class="box table" id="box_1" mercado="Partido (tiempo reglamentario)">		
+	<h1> <span>Holanda - Eredivisie</span> </h1>
+	<table id="jogos">
+		<tr>
+			<th>11/09</th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th class="tcen">1</th>
+			<th class="tcen">X</th>
+			<th class="tcen">2</th>
+			<th></th>
+		</tr>
+			<tr jogo="2222560" tipoodd="1">
+			<td class="tcen" width="40"><span class="hour">10h45</span></td>
+			<td id="teamA" class="tright" width="132">Ajax</td>
+			<td class="tcen" width="15">x</td>
+			<td id="teamB" class="tleft" width="132">Vitesse</td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Ajax" bet="1" idodd="19045493212222560" title="Ajax" class="btodd button green">1.50</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Empate" bet="X" idodd="19045492962222560" title="Empate" class="btodd button green">4.50</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Vitesse" bet="2" idodd="19045493182222560" title="Vitesse" class="btodd button green">5.75</a></td>
+			<td class="tcen" width="40"><a href="/apuestas/jogo/2222560" title="+ mercados" class="list"><i class="fa fa-list-alt"></i></a></td>
+		</tr>
+			</table>
+	</section>
+			<section class="box table" id="box_1" mercado="Partido (tiempo reglamentario)">		
+	<h1> <span>Inglaterra - Premier League</span> </h1>
+	<table id="jogos">
+		<tr>
+			<th>11/09</th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th class="tcen">1</th>
+			<th class="tcen">X</th>
+			<th class="tcen">2</th>
+			<th></th>
+		</tr>
+			<tr jogo="2222145" tipoodd="1">
+			<td class="tcen" width="40"><span class="hour">11h00</span></td>
+			<td id="teamA" class="tright" width="132">Swansea City</td>
+			<td class="tcen" width="15">x</td>
+			<td id="teamB" class="tleft" width="132">Chelsea</td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Swansea City" bet="1" idodd="7873912462222145" title="Swansea City" class="btodd button green">5.00</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Empate" bet="X" idodd="7873912052222145" title="Empate" class="btodd button green">4.00</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Chelsea" bet="2" idodd="7873912472222145" title="Chelsea" class="btodd button green">1.67</a></td>
+			<td class="tcen" width="40"><a href="/apuestas/jogo/2222145" title="+ mercados" class="list"><i class="fa fa-list-alt"></i></a></td>
+		</tr>
+			</table>
+	</section>
+			<section class="box table" id="box_1" mercado="Partido (tiempo reglamentario)">		
+	<h1> <span>Italia - Serie A</span> </h1>
+	<table id="jogos">
+		<tr>
+			<th>11/09</th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th class="tcen">1</th>
+			<th class="tcen">X</th>
+			<th class="tcen">2</th>
+			<th></th>
+		</tr>
+			<tr jogo="2290643" tipoodd="1">
+			<td class="tcen" width="40"><span class="hour">14h45</span></td>
+			<td id="teamA" class="tright" width="132">Pescara</td>
+			<td class="tcen" width="15">x</td>
+			<td id="teamB" class="tleft" width="132">Inter</td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Pescara" bet="1" idodd="21144245262290643" title="Pescara" class="btodd button green">4.50</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Empate" bet="X" idodd="21144246152290643" title="Empate" class="btodd button green">3.75</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Inter" bet="2" idodd="21144245292290643" title="Inter" class="btodd button green">1.73</a></td>
+			<td class="tcen" width="40"><a href="/apuestas/jogo/2290643" title="+ mercados" class="list"><i class="fa fa-list-alt"></i></a></td>
+		</tr>
+			</table>
+	</section>
+			<section class="box table" id="box_1" mercado="Partido (tiempo reglamentario)">		
+	<h1> <span>Argentina - Primera División </span> </h1>
+	<table id="jogos">
+		<tr>
+			<th>11/09</th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th class="tcen">1</th>
+			<th class="tcen">X</th>
+			<th class="tcen">2</th>
+			<th></th>
+		</tr>
+			<tr jogo="2319255" tipoodd="1">
+			<td class="tcen" width="40"><span class="hour">15h00</span></td>
+			<td id="teamA" class="tright" width="132">Vélez Sarsfield</td>
+			<td class="tcen" width="15">x</td>
+			<td id="teamB" class="tleft" width="132">Rosario Central</td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Vélez Sarsfield" bet="1" idodd="18853440272319255" title="Vélez Sarsfield" class="btodd button green">2.90</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Empate" bet="X" idodd="18853440502319255" title="Empate" class="btodd button green">3.20</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Rosario Central" bet="2" idodd="18853440282319255" title="Rosario Central" class="btodd button green">2.45</a></td>
+			<td class="tcen" width="40"><a href="/apuestas/jogo/2319255" title="+ mercados" class="list"><i class="fa fa-list-alt"></i></a></td>
+		</tr>
+				<tr jogo="2319244" tipoodd="1">
+			<td class="tcen" width="40"><span class="hour">17h00</span></td>
+			<td id="teamA" class="tright" width="132">Boca Juniors</td>
+			<td class="tcen" width="15">x</td>
+			<td id="teamB" class="tleft" width="132">Belgrano</td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Boca Juniors" bet="1" idodd="18750274232319244" title="Boca Juniors" class="btodd button green">1.50</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Empate" bet="X" idodd="18750275122319244" title="Empate" class="btodd button green">3.75</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Belgrano" bet="2" idodd="18750274262319244" title="Belgrano" class="btodd button green">7.50</a></td>
+			<td class="tcen" width="40"><a href="/apuestas/jogo/2319244" title="+ mercados" class="list"><i class="fa fa-list-alt"></i></a></td>
+		</tr>
+				<tr jogo="2319253" tipoodd="1">
+			<td class="tcen" width="40"><span class="hour">19h00</span></td>
+			<td id="teamA" class="tright" width="132">Talleres de Córdoba</td>
+			<td class="tcen" width="15">x</td>
+			<td id="teamB" class="tleft" width="132">River Plate</td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Talleres de Córdoba" bet="1" idodd="18855596492319253" title="Talleres de Córdoba" class="btodd button green">3.40</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Empate" bet="X" idodd="18855595442319253" title="Empate" class="btodd button green">3.20</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="River Plate" bet="2" idodd="18855596462319253" title="River Plate" class="btodd button green">2.20</a></td>
+			<td class="tcen" width="40"><a href="/apuestas/jogo/2319253" title="+ mercados" class="list"><i class="fa fa-list-alt"></i></a></td>
+		</tr>
+			</table>
+	</section>
+			<section class="box table" id="box_1" mercado="Partido (tiempo reglamentario)">		
+	<h1> <span>Internacional - UEFA Champions League - Group A</span> </h1>
+	<table id="jogos">
+		<tr>
+			<th>13/09</th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th class="tcen">1</th>
+			<th class="tcen">X</th>
+			<th class="tcen">2</th>
+			<th></th>
+		</tr>
+			<tr jogo="2332305" tipoodd="1">
+			<td class="tcen" width="40"><span class="hour">14h45</span></td>
+			<td id="teamA" class="tright" width="132">Paris SG</td>
+			<td class="tcen" width="15">x</td>
+			<td id="teamB" class="tleft" width="132">Arsenal</td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Paris SG" bet="1" idodd="12171661142332305" title="Paris SG" class="btodd button green">1.73</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Empate" bet="X" idodd="12171662172332305" title="Empate" class="btodd button green">3.60</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Arsenal" bet="2" idodd="12171661152332305" title="Arsenal" class="btodd button green">4.75</a></td>
+			<td class="tcen" width="40"><a href="/apuestas/jogo/2332305" title="+ mercados" class="list"><i class="fa fa-list-alt"></i></a></td>
+		</tr>
+			</table>
+	</section>
+			<section class="box table" id="box_1" mercado="Partido (tiempo reglamentario)">		
+	<h1> <span>Internacional - UEFA Champions League - Group B</span> </h1>
+	<table id="jogos">
+		<tr>
+			<th>13/09</th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th class="tcen">1</th>
+			<th class="tcen">X</th>
+			<th class="tcen">2</th>
+			<th></th>
+		</tr>
+			<tr jogo="2332324" tipoodd="1">
+			<td class="tcen" width="40"><span class="hour">14h45</span></td>
+			<td id="teamA" class="tright" width="132">Benfica</td>
+			<td class="tcen" width="15">x</td>
+			<td id="teamB" class="tleft" width="132">Besiktas</td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Benfica" bet="1" idodd="13871903272332324" title="Benfica" class="btodd button green">1.67</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Empate" bet="X" idodd="13871902402332324" title="Empate" class="btodd button green">3.60</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Besiktas" bet="2" idodd="13871903302332324" title="Besiktas" class="btodd button green">5.25</a></td>
+			<td class="tcen" width="40"><a href="/apuestas/jogo/2332324" title="+ mercados" class="list"><i class="fa fa-list-alt"></i></a></td>
+		</tr>
+			</table>
+	</section>
+			<section class="box table" id="box_1" mercado="Partido (tiempo reglamentario)">		
+	<h1> <span>Internacional - UEFA Champions League - Group C</span> </h1>
+	<table id="jogos">
+		<tr>
+			<th>13/09</th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th class="tcen">1</th>
+			<th class="tcen">X</th>
+			<th class="tcen">2</th>
+			<th></th>
+		</tr>
+			<tr jogo="2332344" tipoodd="1">
+			<td class="tcen" width="40"><span class="hour">14h45</span></td>
+			<td id="teamA" class="tright" width="132">FC Barcelona</td>
+			<td class="tcen" width="15">x</td>
+			<td id="teamB" class="tleft" width="132">Celtic</td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="FC Barcelona" bet="1" idodd="7016497712332344" title="FC Barcelona" class="btodd button green">1.08</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Empate" bet="X" idodd="7016498582332344" title="Empate" class="btodd button green">11.00</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Celtic" bet="2" idodd="7016497682332344" title="Celtic" class="btodd button green">21.00</a></td>
+			<td class="tcen" width="40"><a href="/apuestas/jogo/2332344" title="+ mercados" class="list"><i class="fa fa-list-alt"></i></a></td>
+		</tr>
+				<tr jogo="2332345" tipoodd="1">
+			<td class="tcen" width="40"><span class="hour">14h45</span></td>
+			<td id="teamA" class="tright" width="132">Manchester City</td>
+			<td class="tcen" width="15">x</td>
+			<td id="teamB" class="tleft" width="132">Borussia Mönchengladbach</td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Manchester City" bet="1" idodd="7015442662332345" title="Manchester City" class="btodd button green">1.50</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Empate" bet="X" idodd="7015441632332345" title="Empate" class="btodd button green">4.33</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Borussia Mönchengladbach" bet="2" idodd="7015442652332345" title="Borussia Mönchengladbach" class="btodd button green">6.00</a></td>
+			<td class="tcen" width="40"><a href="/apuestas/jogo/2332345" title="+ mercados" class="list"><i class="fa fa-list-alt"></i></a></td>
+		</tr>
+			</table>
+	</section>
+			<section class="box table" id="box_1" mercado="Partido (tiempo reglamentario)">		
+	<h1> <span>Internacional - UEFA Champions League - Group D</span> </h1>
+	<table id="jogos">
+		<tr>
+			<th>13/09</th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th class="tcen">1</th>
+			<th class="tcen">X</th>
+			<th class="tcen">2</th>
+			<th></th>
+		</tr>
+			<tr jogo="2332362" tipoodd="1">
+			<td class="tcen" width="40"><span class="hour">14h45</span></td>
+			<td id="teamA" class="tright" width="132">FC Bayern München</td>
+			<td class="tcen" width="15">x</td>
+			<td id="teamB" class="tleft" width="132">Rostov</td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="FC Bayern München" bet="1" idodd="5315919272332362" title="FC Bayern München" class="btodd button green">1.07</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Empate" bet="X" idodd="5315918862332362" title="Empate" class="btodd button green">11.00</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Rostov" bet="2" idodd="5315919282332362" title="Rostov" class="btodd button green">23.00</a></td>
+			<td class="tcen" width="40"><a href="/apuestas/jogo/2332362" title="+ mercados" class="list"><i class="fa fa-list-alt"></i></a></td>
+		</tr>
+				<tr jogo="2332363" tipoodd="1">
+			<td class="tcen" width="40"><span class="hour">14h45</span></td>
+			<td id="teamA" class="tright" width="132">PSV Eindhoven</td>
+			<td class="tcen" width="15">x</td>
+			<td id="teamB" class="tleft" width="132">Atlético Madrid</td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="PSV Eindhoven" bet="1" idodd="5314864222332363" title="PSV Eindhoven" class="btodd button green">4.00</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Empate" bet="X" idodd="5314864472332363" title="Empate" class="btodd button green">3.40</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Atlético Madrid" bet="2" idodd="5314864252332363" title="Atlético Madrid" class="btodd button green">1.91</a></td>
+			<td class="tcen" width="40"><a href="/apuestas/jogo/2332363" title="+ mercados" class="list"><i class="fa fa-list-alt"></i></a></td>
+		</tr>
+			</table>
+	</section>
+			<section class="box table" id="box_1" mercado="Partido (tiempo reglamentario)">		
+	<h1> <span>Internacional - UEFA Champions League - Group F</span> </h1>
+	<table id="jogos">
+		<tr>
+			<th>14/09</th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th class="tcen">1</th>
+			<th class="tcen">X</th>
+			<th class="tcen">2</th>
+			<th></th>
+		</tr>
+			<tr jogo="2332399" tipoodd="1">
+			<td class="tcen" width="40"><span class="hour">14h45</span></td>
+			<td id="teamA" class="tright" width="132">Real Madrid</td>
+			<td class="tcen" width="15">x</td>
+			<td id="teamB" class="tleft" width="132">Sporting CP</td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Real Madrid" bet="1" idodd="196693512332399" title="Real Madrid" class="btodd button green">1.22</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Empate" bet="X" idodd="196692642332399" title="Empate" class="btodd button green">6.50</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Sporting CP" bet="2" idodd="196693502332399" title="Sporting CP" class="btodd button green">11.00</a></td>
+			<td class="tcen" width="40"><a href="/apuestas/jogo/2332399" title="+ mercados" class="list"><i class="fa fa-list-alt"></i></a></td>
+		</tr>
+				<tr jogo="2332454" tipoodd="1">
+			<td class="tcen" width="40"><span class="hour">14h45</span></td>
+			<td id="teamA" class="tright" width="132">Legia Warszawa</td>
+			<td class="tcen" width="15">x</td>
+			<td id="teamB" class="tleft" width="132">Borussia Dortmund</td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Legia Warszawa" bet="1" idodd="14702089132332454" title="Legia Warszawa" class="btodd button green">8.50</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Empate" bet="X" idodd="14702088742332454" title="Empate" class="btodd button green">5.00</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Borussia Dortmund" bet="2" idodd="14702089162332454" title="Borussia Dortmund" class="btodd button green">1.33</a></td>
+			<td class="tcen" width="40"><a href="/apuestas/jogo/2332454" title="+ mercados" class="list"><i class="fa fa-list-alt"></i></a></td>
+		</tr>
+			</table>
+	</section>
+			<section class="box table" id="box_1" mercado="Partido (tiempo reglamentario)">		
+	<h1> <span>Internacional - UEFA Champions League - Group G</span> </h1>
+	<table id="jogos">
+		<tr>
+			<th>14/09</th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th class="tcen">1</th>
+			<th class="tcen">X</th>
+			<th class="tcen">2</th>
+			<th></th>
+		</tr>
+			<tr jogo="2332418" tipoodd="1">
+			<td class="tcen" width="40"><span class="hour">14h45</span></td>
+			<td id="teamA" class="tright" width="132">FC Porto</td>
+			<td class="tcen" width="15">x</td>
+			<td id="teamB" class="tleft" width="132">FC København</td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="FC Porto" bet="1" idodd="4483751432332418" title="FC Porto" class="btodd button green">1.50</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Empate" bet="X" idodd="4483751662332418" title="Empate" class="btodd button green">3.75</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="FC København" bet="2" idodd="4483751402332418" title="FC København" class="btodd button green">7.50</a></td>
+			<td class="tcen" width="40"><a href="/apuestas/jogo/2332418" title="+ mercados" class="list"><i class="fa fa-list-alt"></i></a></td>
+		</tr>
+			</table>
+	</section>
+			<section class="box table" id="box_1" mercado="Partido (tiempo reglamentario)">		
+	<h1> <span>Internacional - UEFA Champions League - Group H</span> </h1>
+	<table id="jogos">
+		<tr>
+			<th>14/09</th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th class="tcen">1</th>
+			<th class="tcen">X</th>
+			<th class="tcen">2</th>
+			<th></th>
+		</tr>
+			<tr jogo="2332437" tipoodd="1">
+			<td class="tcen" width="40"><span class="hour">14h45</span></td>
+			<td id="teamA" class="tright" width="132">Lyon</td>
+			<td class="tcen" width="15">x</td>
+			<td id="teamB" class="tleft" width="132">Dinamo Zagreb</td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Lyon" bet="1" idodd="11592688182332437" title="Lyon" class="btodd button green">1.45</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Empate" bet="X" idodd="11592688412332437" title="Empate" class="btodd button green">4.20</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Dinamo Zagreb" bet="2" idodd="11592688152332437" title="Dinamo Zagreb" class="btodd button green">7.50</a></td>
+			<td class="tcen" width="40"><a href="/apuestas/jogo/2332437" title="+ mercados" class="list"><i class="fa fa-list-alt"></i></a></td>
+		</tr>
+				<tr jogo="2332438" tipoodd="1">
+			<td class="tcen" width="40"><span class="hour">14h45</span></td>
+			<td id="teamA" class="tright" width="132">Juventus</td>
+			<td class="tcen" width="15">x</td>
+			<td id="teamB" class="tleft" width="132">Sevilla</td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Juventus" bet="1" idodd="11593570272332438" title="Juventus" class="btodd button green">1.62</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Empate" bet="X" idodd="11593570042332438" title="Empate" class="btodd button green">3.80</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Sevilla" bet="2" idodd="11593570302332438" title="Sevilla" class="btodd button green">5.50</a></td>
+			<td class="tcen" width="40"><a href="/apuestas/jogo/2332438" title="+ mercados" class="list"><i class="fa fa-list-alt"></i></a></td>
+		</tr>
+			</table>
+	</section>
+			<section class="box table" id="box_1" mercado="Partido (tiempo reglamentario)">		
+	<h1> <span>Internacional - UEFA Europa League - Group A</span> </h1>
+	<table id="jogos">
+		<tr>
+			<th>15/09</th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th class="tcen">1</th>
+			<th class="tcen">X</th>
+			<th class="tcen">2</th>
+			<th></th>
+		</tr>
+			<tr jogo="2334577" tipoodd="1">
+			<td class="tcen" width="40"><span class="hour">13h00</span></td>
+			<td id="teamA" class="tright" width="132">Feyenoord</td>
+			<td class="tcen" width="15">x</td>
+			<td id="teamB" class="tleft" width="132">Manchester United</td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Feyenoord" bet="1" idodd="2149783752334577" title="Feyenoord" class="btodd button green">5.00</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Empate" bet="X" idodd="2149784002334577" title="Empate" class="btodd button green">3.80</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Manchester United" bet="2" idodd="2149783742334577" title="Manchester United" class="btodd button green">1.67</a></td>
+			<td class="tcen" width="40"><a href="/apuestas/jogo/2334577" title="+ mercados" class="list"><i class="fa fa-list-alt"></i></a></td>
+		</tr>
+			</table>
+	</section>
+			<section class="box table" id="box_1" mercado="Partido (tiempo reglamentario)">		
+	<h1> <span>Internacional - UEFA Europa League - Group G</span> </h1>
+	<table id="jogos">
+		<tr>
+			<th>15/09</th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th class="tcen">1</th>
+			<th class="tcen">X</th>
+			<th class="tcen">2</th>
+			<th></th>
+		</tr>
+			<tr jogo="2334779" tipoodd="1">
+			<td class="tcen" width="40"><span class="hour">15h05</span></td>
+			<td id="teamA" class="tright" width="132">Panathinaikos</td>
+			<td class="tcen" width="15">x</td>
+			<td id="teamB" class="tleft" width="132">Ajax</td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Panathinaikos" bet="1" idodd="2174046672334779" title="Panathinaikos" class="btodd button green">2.50</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Empate" bet="X" idodd="2174045802334779" title="Empate" class="btodd button green">3.25</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Ajax" bet="2" idodd="2174046662334779" title="Ajax" class="btodd button green">2.80</a></td>
+			<td class="tcen" width="40"><a href="/apuestas/jogo/2334779" title="+ mercados" class="list"><i class="fa fa-list-alt"></i></a></td>
+		</tr>
+			</table>
+	</section>
+			<section class="box table" id="box_1" mercado="Partido (tiempo reglamentario)">		
+	<h1> <span>Internacional - UEFA Europa League - Group K</span> </h1>
+	<table id="jogos">
+		<tr>
+			<th>15/09</th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th class="tcen">1</th>
+			<th class="tcen">X</th>
+			<th class="tcen">2</th>
+			<th></th>
+		</tr>
+			<tr jogo="2334888" tipoodd="1">
+			<td class="tcen" width="40"><span class="hour">15h05</span></td>
+			<td id="teamA" class="tright" width="132">Inter</td>
+			<td class="tcen" width="15">x</td>
+			<td id="teamB" class="tleft" width="132">Hapoel Be'er Sheva</td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Inter" bet="1" idodd="17037368662334888" title="Inter" class="btodd button green">1.25</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Empate" bet="X" idodd="17037369052334888" title="Empate" class="btodd button green">6.00</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Hapoel Be'er Sheva" bet="2" idodd="17037368632334888" title="Hapoel Be'er Sheva" class="btodd button green">10.00</a></td>
+			<td class="tcen" width="40"><a href="/apuestas/jogo/2334888" title="+ mercados" class="list"><i class="fa fa-list-alt"></i></a></td>
+		</tr>
+			</table>
+	</section>
+			<section class="box table" id="box_1" mercado="Partido (tiempo reglamentario)">		
+	<h1> <span>Italia - Serie A</span> </h1>
+	<table id="jogos">
+		<tr>
+			<th>16/09</th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th class="tcen">1</th>
+			<th class="tcen">X</th>
+			<th class="tcen">2</th>
+			<th></th>
+		</tr>
+			<tr jogo="2290651" tipoodd="1">
+			<td class="tcen" width="40"><span class="hour">14h45</span></td>
+			<td id="teamA" class="tright" width="132">Sampdoria</td>
+			<td class="tcen" width="15">x</td>
+			<td id="teamB" class="tleft" width="132">AC Milan</td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Sampdoria" bet="1" idodd="14015957872290651" title="Sampdoria" class="btodd button green">3.10</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Empate" bet="X" idodd="14015958262290651" title="Empate" class="btodd button green">3.30</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="AC Milan" bet="2" idodd="14015957882290651" title="AC Milan" class="btodd button green">2.30</a></td>
+			<td class="tcen" width="40"><a href="/apuestas/jogo/2290651" title="+ mercados" class="list"><i class="fa fa-list-alt"></i></a></td>
+		</tr>
+			</table>
+	</section>
+			<section class="box table" id="box_1" mercado="Partido (tiempo reglamentario)">		
+	<h1> <span>Inglaterra - Premier League</span> </h1>
+	<table id="jogos">
+		<tr>
+			<th>16/09</th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th class="tcen">1</th>
+			<th class="tcen">X</th>
+			<th class="tcen">2</th>
+			<th></th>
+		</tr>
+			<tr jogo="2222148" tipoodd="1">
+			<td class="tcen" width="40"><span class="hour">15h00</span></td>
+			<td id="teamA" class="tright" width="132">Chelsea</td>
+			<td class="tcen" width="15">x</td>
+			<td id="teamB" class="tleft" width="132">Liverpool</td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Chelsea" bet="1" idodd="7876995612222148" title="Chelsea" class="btodd button green">2.10</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Empate" bet="X" idodd="7876996022222148" title="Empate" class="btodd button green">3.40</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Liverpool" bet="2" idodd="7876995642222148" title="Liverpool" class="btodd button green">3.40</a></td>
+			<td class="tcen" width="40"><a href="/apuestas/jogo/2222148" title="+ mercados" class="list"><i class="fa fa-list-alt"></i></a></td>
+		</tr>
+			</table>
+	</section>
+			<section class="box table" id="box_1" mercado="Partido (tiempo reglamentario)">		
+	<h1> <span>España - LaLiga</span> </h1>
+	<table id="jogos">
+		<tr>
+			<th>17/09</th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th class="tcen">1</th>
+			<th class="tcen">X</th>
+			<th class="tcen">2</th>
+			<th></th>
+		</tr>
+			<tr jogo="2274309" tipoodd="1">
+			<td class="tcen" width="40"><span class="hour">07h00</span></td>
+			<td id="teamA" class="tright" width="132">Leganés</td>
+			<td class="tcen" width="15">x</td>
+			<td id="teamB" class="tleft" width="132">FC Barcelona</td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Leganés" bet="1" idodd="21011795692274309" title="Leganés" class="btodd button green">15.00</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Empate" bet="X" idodd="21011794822274309" title="Empate" class="btodd button green">7.00</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="FC Barcelona" bet="2" idodd="21011795682274309" title="FC Barcelona" class="btodd button green">1.17</a></td>
+			<td class="tcen" width="40"><a href="/apuestas/jogo/2274309" title="+ mercados" class="list"><i class="fa fa-list-alt"></i></a></td>
+		</tr>
+			</table>
+	</section>
+			<section class="box table" id="box_1" mercado="Partido (tiempo reglamentario)">		
+	<h1> <span>Alemania - Bundesliga</span> </h1>
+	<table id="jogos">
+		<tr>
+			<th>17/09</th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th class="tcen">1</th>
+			<th class="tcen">X</th>
+			<th class="tcen">2</th>
+			<th></th>
+		</tr>
+			<tr jogo="2243793" tipoodd="1">
+			<td class="tcen" width="40"><span class="hour">09h30</span></td>
+			<td id="teamA" class="tright" width="132">FC Bayern München</td>
+			<td class="tcen" width="15">x</td>
+			<td id="teamB" class="tleft" width="132">FC Ingolstadt 04</td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="FC Bayern München" bet="1" idodd="20626863522243793" title="FC Bayern München" class="btodd button green">1.10</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Empate" bet="X" idodd="20626863932243793" title="Empate" class="btodd button green">9.00</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="FC Ingolstadt 04" bet="2" idodd="20626863552243793" title="FC Ingolstadt 04" class="btodd button green">21.00</a></td>
+			<td class="tcen" width="40"><a href="/apuestas/jogo/2243793" title="+ mercados" class="list"><i class="fa fa-list-alt"></i></a></td>
+		</tr>
+				<tr jogo="2243794" tipoodd="1">
+			<td class="tcen" width="40"><span class="hour">09h30</span></td>
+			<td id="teamA" class="tright" width="132">Borussia Dortmund</td>
+			<td class="tcen" width="15">x</td>
+			<td id="teamB" class="tleft" width="132">SV Darmstadt 98</td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Borussia Dortmund" bet="1" idodd="20630074792243794" title="Borussia Dortmund" class="btodd button green">1.14</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Empate" bet="X" idodd="20630075822243794" title="Empate" class="btodd button green">8.00</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="SV Darmstadt 98" bet="2" idodd="20630074762243794" title="SV Darmstadt 98" class="btodd button green">15.00</a></td>
+			<td class="tcen" width="40"><a href="/apuestas/jogo/2243794" title="+ mercados" class="list"><i class="fa fa-list-alt"></i></a></td>
+		</tr>
+			</table>
+	</section>
+			<section class="box table" id="box_1" mercado="Partido (tiempo reglamentario)">		
+	<h1> <span>Inglaterra - Premier League</span> </h1>
+	<table id="jogos">
+		<tr>
+			<th>17/09</th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th class="tcen">1</th>
+			<th class="tcen">X</th>
+			<th class="tcen">2</th>
+			<th></th>
+		</tr>
+			<tr jogo="2222151" tipoodd="1">
+			<td class="tcen" width="40"><span class="hour">10h00</span></td>
+			<td id="teamA" class="tright" width="132">Hull City</td>
+			<td class="tcen" width="15">x</td>
+			<td id="teamB" class="tleft" width="132">Arsenal</td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Hull City" bet="1" idodd="86598852222151" title="Hull City" class="btodd button green">6.00</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Empate" bet="X" idodd="86598442222151" title="Empate" class="btodd button green">4.33</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Arsenal" bet="2" idodd="86598862222151" title="Arsenal" class="btodd button green">1.50</a></td>
+			<td class="tcen" width="40"><a href="/apuestas/jogo/2222151" title="+ mercados" class="list"><i class="fa fa-list-alt"></i></a></td>
+		</tr>
+				<tr jogo="2222153" tipoodd="1">
+			<td class="tcen" width="40"><span class="hour">10h00</span></td>
+			<td id="teamA" class="tright" width="132">Manchester City</td>
+			<td class="tcen" width="15">x</td>
+			<td id="teamB" class="tleft" width="132">AFC Bournemouth</td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Manchester City" bet="1" idodd="87317592222153" title="Manchester City" class="btodd button green">1.29</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Empate" bet="X" idodd="87318462222153" title="Empate" class="btodd button green">5.00</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="AFC Bournemouth" bet="2" idodd="87317562222153" title="AFC Bournemouth" class="btodd button green">11.00</a></td>
+			<td class="tcen" width="40"><a href="/apuestas/jogo/2222153" title="+ mercados" class="list"><i class="fa fa-list-alt"></i></a></td>
+		</tr>
+			</table>
+	</section>
+			<section class="box table" id="box_1" mercado="Partido (tiempo reglamentario)">		
+	<h1> <span>España - LaLiga</span> </h1>
+	<table id="jogos">
+		<tr>
+			<th>17/09</th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th class="tcen">1</th>
+			<th class="tcen">X</th>
+			<th class="tcen">2</th>
+			<th></th>
+		</tr>
+			<tr jogo="2274310" tipoodd="1">
+			<td class="tcen" width="40"><span class="hour">10h15</span></td>
+			<td id="teamA" class="tright" width="132">Atlético Madrid</td>
+			<td class="tcen" width="15">x</td>
+			<td id="teamB" class="tleft" width="132">Sporting Gijón</td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Atlético Madrid" bet="1" idodd="13221398932274310" title="Atlético Madrid" class="btodd button green">1.20</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Empate" bet="X" idodd="13221399802274310" title="Empate" class="btodd button green">6.00</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Sporting Gijón" bet="2" idodd="13221398902274310" title="Sporting Gijón" class="btodd button green">15.00</a></td>
+			<td class="tcen" width="40"><a href="/apuestas/jogo/2274310" title="+ mercados" class="list"><i class="fa fa-list-alt"></i></a></td>
+		</tr>
+			</table>
+	</section>
+			<section class="box table" id="box_1" mercado="Partido (tiempo reglamentario)">		
+	<h1> <span>Inglaterra - Premier League</span> </h1>
+	<table id="jogos">
+		<tr>
+			<th>18/09</th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th class="tcen">1</th>
+			<th class="tcen">X</th>
+			<th class="tcen">2</th>
+			<th></th>
+		</tr>
+			<tr jogo="2222156" tipoodd="1">
+			<td class="tcen" width="40"><span class="hour">07h00</span></td>
+			<td id="teamA" class="tright" width="132">Watford</td>
+			<td class="tcen" width="15">x</td>
+			<td id="teamB" class="tleft" width="132">Manchester United</td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Watford" bet="1" idodd="84825062222156" title="Watford" class="btodd button green">6.00</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Empate" bet="X" idodd="84824032222156" title="Empate" class="btodd button green">4.33</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Manchester United" bet="2" idodd="84825052222156" title="Manchester United" class="btodd button green">1.50</a></td>
+			<td class="tcen" width="40"><a href="/apuestas/jogo/2222156" title="+ mercados" class="list"><i class="fa fa-list-alt"></i></a></td>
+		</tr>
+			</table>
+	</section>
+			<section class="box table" id="box_1" mercado="Partido (tiempo reglamentario)">		
+	<h1> <span>Italia - Serie A</span> </h1>
+	<table id="jogos">
+		<tr>
+			<th>18/09</th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th class="tcen">1</th>
+			<th class="tcen">X</th>
+			<th class="tcen">2</th>
+			<th></th>
+		</tr>
+			<tr jogo="2290648" tipoodd="1">
+			<td class="tcen" width="40"><span class="hour">12h00</span></td>
+			<td id="teamA" class="tright" width="132">Inter</td>
+			<td class="tcen" width="15">x</td>
+			<td id="teamB" class="tleft" width="132">Juventus</td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Inter" bet="1" idodd="21147327132290648" title="Inter" class="btodd button green">3.40</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Empate" bet="X" idodd="21147326242290648" title="Empate" class="btodd button green">3.30</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Juventus" bet="2" idodd="21147327102290648" title="Juventus" class="btodd button green">2.15</a></td>
+			<td class="tcen" width="40"><a href="/apuestas/jogo/2290648" title="+ mercados" class="list"><i class="fa fa-list-alt"></i></a></td>
+		</tr>
+			</table>
+	</section>
+			<section class="box table" id="box_1" mercado="Partido (tiempo reglamentario)">		
+	<h1> <span>España - LaLiga</span> </h1>
+	<table id="jogos">
+		<tr>
+			<th>18/09</th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th class="tcen">1</th>
+			<th class="tcen">X</th>
+			<th class="tcen">2</th>
+			<th></th>
+		</tr>
+			<tr jogo="2274302" tipoodd="1">
+			<td class="tcen" width="40"><span class="hour">14h45</span></td>
+			<td id="teamA" class="tright" width="132">Espanyol</td>
+			<td class="tcen" width="15">x</td>
+			<td id="teamB" class="tleft" width="132">Real Madrid</td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Espanyol" bet="1" idodd="21009431282274302" title="Espanyol" class="btodd button green">9.00</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Empate" bet="X" idodd="21009430872274302" title="Empate" class="btodd button green">5.50</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Real Madrid" bet="2" idodd="21009431292274302" title="Real Madrid" class="btodd button green">1.30</a></td>
+			<td class="tcen" width="40"><a href="/apuestas/jogo/2274302" title="+ mercados" class="list"><i class="fa fa-list-alt"></i></a></td>
+		</tr>
+			</table>
+	</section>
+			<section class="box table" id="box_1" mercado="Partido (tiempo reglamentario)">		
+	<h1> <span>Inglaterra - Capital One Cup</span> </h1>
+	<table id="jogos">
+		<tr>
+			<th>20/09</th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th class="tcen">1</th>
+			<th class="tcen">X</th>
+			<th class="tcen">2</th>
+			<th></th>
+		</tr>
+			<tr jogo="2331353" tipoodd="1">
+			<td class="tcen" width="40"><span class="hour">14h45</span></td>
+			<td id="teamA" class="tright" width="132">Leicester City</td>
+			<td class="tcen" width="15">x</td>
+			<td id="teamB" class="tleft" width="132">Chelsea</td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Leicester City" bet="1" idodd="20263826022331353" title="Leicester City" class="btodd button green">3.00</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Empate" bet="X" idodd="20263825772331353" title="Empate" class="btodd button green">3.40</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Chelsea" bet="2" idodd="20263825992331353" title="Chelsea" class="btodd button green">2.30</a></td>
+			<td class="tcen" width="40"><a href="/apuestas/jogo/2331353" title="+ mercados" class="list"><i class="fa fa-list-alt"></i></a></td>
+		</tr>
+				<tr jogo="2331356" tipoodd="1">
+			<td class="tcen" width="40"><span class="hour">14h45</span></td>
+			<td id="teamA" class="tright" width="132">Nottingham Forest</td>
+			<td class="tcen" width="15">x</td>
+			<td id="teamB" class="tleft" width="132">Arsenal</td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Nottingham Forest" bet="1" idodd="20264208452331356" title="Nottingham Forest" class="btodd button green">6.00</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Empate" bet="X" idodd="20264208862331356" title="Empate" class="btodd button green">4.10</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Arsenal" bet="2" idodd="20264208442331356" title="Arsenal" class="btodd button green">1.53</a></td>
+			<td class="tcen" width="40"><a href="/apuestas/jogo/2331356" title="+ mercados" class="list"><i class="fa fa-list-alt"></i></a></td>
+		</tr>
+			</table>
+	</section>
+			<section class="box table" id="box_1" mercado="Partido (tiempo reglamentario)">		
+	<h1> <span>Inglaterra - Capital One Cup</span> </h1>
+	<table id="jogos">
+		<tr>
+			<th>21/09</th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th class="tcen">1</th>
+			<th class="tcen">X</th>
+			<th class="tcen">2</th>
+			<th></th>
+		</tr>
+			<tr jogo="2331355" tipoodd="1">
+			<td class="tcen" width="40"><span class="hour">14h45</span></td>
+			<td id="teamA" class="tright" width="132">Northampton Town</td>
+			<td class="tcen" width="15">x</td>
+			<td id="teamB" class="tleft" width="132">Manchester United</td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Northampton Town" bet="1" idodd="20264544762331355" title="Northampton Town" class="btodd button green">11.00</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Empate" bet="X" idodd="20264545792331355" title="Empate" class="btodd button green">5.75</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Manchester United" bet="2" idodd="20264544772331355" title="Manchester United" class="btodd button green">1.25</a></td>
+			<td class="tcen" width="40"><a href="/apuestas/jogo/2331355" title="+ mercados" class="list"><i class="fa fa-list-alt"></i></a></td>
+		</tr>
+				<tr jogo="2331360" tipoodd="1">
+			<td class="tcen" width="40"><span class="hour">14h45</span></td>
+			<td id="teamA" class="tright" width="132">Swansea City</td>
+			<td class="tcen" width="15">x</td>
+			<td id="teamB" class="tleft" width="132">Manchester City</td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Swansea City" bet="1" idodd="2879749242331360" title="Swansea City" class="btodd button green">5.50</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Empate" bet="X" idodd="2879748372331360" title="Empate" class="btodd button green">3.80</a></td>
+			<td class="tcen" width="40"><a href="javascript:;" aposta="Manchester City" bet="2" idodd="2879749272331360" title="Manchester City" class="btodd button green">1.62</a></td>
+			<td class="tcen" width="40"><a href="/apuestas/jogo/2331360" title="+ mercados" class="list"><i class="fa fa-list-alt"></i></a></td>
+		</tr>
+			</table>
+	</section>
+	
+			</section>
+
+			<section class="sidebar right">
+				<style>
+	.odd-multi { background: #E83D1E; padding: 4px; margin: 2px !important; letter-spacing: 0; font-size: 11px; color: #fff !important; }
+</style>
+
+
+<section class="box search">
+	<h1><span>Busqueda</span></h1>
+	<input type="text" id="busca" name="busca" placeholder="Busqueda..." onkeypress="if (event.keyCode==13){ window.location.href='/apuestas/busqueda/'+$('#busca').val(); }">
+		<a href="javascript:window.location.href='/apuestas/busqueda/'+$('#busca').val();">
+			<i class="icon-search"></i>
+		</a>
+</section>
+
+	<form id="form-apostas">
+		<section class="box cliente">
+			<h1><span>Cliente</span></h1>
+
+			<fieldset>
+				<input type="text" id="cliente" name="cliente" placeholder="Nombre...">
+			</fieldset>
+		</section>
+
+		<section class="box apostas">
+			<h1><span>Mis Apuestas</span><a class="badgepuntos" href="/apuestas/puntos">Mis puntos</a></h1>
+
+			<table id="tabapostas" class="tabapostass comum hide">
+			</table>
+
+			<input type="hidden" id="oddmultipla" />
+
+			<section class="tabapostass hide">
+				<h2>Valor de la(s) Apuesta(s): <span class="v_respsimples right cred">0</span></h2>
+				<h2><strong>Posible a Ganar: </strong><span class="v_totalsimples right cgreen">0</span> <span class="right">&nbsp;+&nbsp;</span> <span class="vapostado right cred">0</span></h2>
+				
+				<div class="fix"></div>
+
+				<div class="actionbar">
+					<a href="javascript:;" class="left link limparapostas">Eliminar apuestas</a>
+					<a href="javascript:;" title="Confirmación de Apuesta" class="btapostas button green right">Apuesta Simples</a>
+
+					<div class="fix"></div>
+				</div>
+
+				<div class="fix"></div>
+			</section>
+
+			<h1 class="tabapostasm hide"> <span>Apuesta Combinada</span></h1>
+
+			<table class="tabapostasm multipla hide">
+				<tr>
+					<td class="tcen">
+						<span class="oddcombinada">Odd combinada</span> <br>
+
+						<b><span class="toddmultipla cgreen"></span></b>
+
+						<input name="txtapostam" onkeyup="$('#txtapostamgs').val(''); calculatotaismulti();" placeholder="Dolares" id="txtapostam" type="text" class="tright hide">
+						<input name="txtapostamgs" onkeyup="$('#txtapostam').val(''); calculatotaismulti();" placeholder="Guaranies" id="txtapostamgs" type="text" class="tright">
+					</td>
+				</tr>
+			</table>
+
+			<section class="tabapostasm hide">
+				<h2>Valor de la Apuesta: <span class="v_respmulti right cred">0 </span></h2>
+				<h2><strong>Posible a Ganar: </strong><span class="v_totalmulti right cgreen">0 </span> <span class="right">&nbsp;+&nbsp;</span> <span class="vapostadomulti right cred">0 </span></h2>
+				<a href="javascript:;" title="Confirmación de Apuesta" class="btapostam button green right">Apuesta Combinada</a>
+				<div class="fix"></div>
+			</section>
+
+			<h2 class="msgsemapostas">No hay apuestas seleccionadas.</h2>
+		</section>
+	</form>
+
+<div class="fix"></div>			</section>
+
+			<div class="fix"></div>
+
+			<section class="footer">
+				<div class="container">
+					<ul class="links left">
+						<li><a href="/apuestas/top">Top Fútbol</a></li>
+						<li><a href="/tenis/top">Top Tenis</a></li>
+						<li><a href="/apuestas/standard/hoy">Hoy</a></li>
+						<li><a href="/apuestas/standard/manana">Mañana</a></li>
+					</ul>
+
+					<ul class="links left">
+						<li><a href="/apuestas/proximosenvivo">En Vivo</a></li>
+						<li><a href="/apuestas/resultados">Resultados</a></li>
+						<li><a href="/contacto">Contacto</a></li>
+						<li><a href="/reglamento">Reglamento</a></li>
+					</ul>
+					
+					<div class="left">
+						<a href="/" title="American Bet">
+							<img src="/assets/images/americanbet.png">
+						</a>
+						<p>© American Bet - 2015.<br/>Todos los derechos reservados.</p>
+					</div>
+
+					<form class="right">
+						<input type="text" name="busca" placeholder="Busqueda...">
+						<button type="submit" class="fa fa-search"></button>
+
+						<ul class="social">
+							<li><a href="https://www.facebook.com/americanbet" target="_blank"><i class="fa fa-facebook-square"></i> americanbet</a></li>
+							<li><a href="https://instagram.com/americanbet" target="_blank"><i class="fa fa-instagram"></i> americanbet</a></li>
+						</ul>
+					</form>
+				</div>
+
+				<div class="copyright fix tcen">
+					<p>Accesando, usando o navegando continuamente esta pagina web usted esta aceptando que AmericanBet usara determinados cookies del <br> navegador para mejorar su experiencia con nosotros, esto no interferirá con su privacidad.</p>
+					<p>Lea nuestro Reglamento para aclarar todas sus dudas sobre nuestro funcionamiento.</p>
+				</div>
+			</section>
+		</section>
+
+		<script>
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+			ga('create', 'UA-67616059-1', 'auto');
+			ga('send', 'pageview');
+		</script>
+	</body>
+
+</html>
